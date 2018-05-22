@@ -36,19 +36,19 @@
 #define ID_TEXT_3 (GUI_ID_USER + 0x04)
 #define ID_TEXT_4 (GUI_ID_USER + 0x05)
 #define ID_TEXT_5 (GUI_ID_USER + 0x06)
-#define ID_TEXT_6 (GUI_ID_USER + 0x07)#define ID_EDIT_0 (GUI_ID_USER + 0x08)#define ID_EDIT_1 (GUI_ID_USER + 0x09)#define ID_EDIT_2 (GUI_ID_USER + 0x0A)#define ID_EDIT_3 (GUI_ID_USER + 0x0B)
+#define ID_TEXT_6 (GUI_ID_USER + 0x07)#define ID_TEXT_7 (GUI_ID_USER + 0x0C)#define ID_EDIT_0 (GUI_ID_USER + 0x08)#define ID_EDIT_1 (GUI_ID_USER + 0x09)#define ID_EDIT_2 (GUI_ID_USER + 0x0A)#define ID_EDIT_3 (GUI_ID_USER + 0x0B)
 
 
 // USER START (Optionally insert additional defines)
 // USER END
-unsigned char dayinsezhi[] = "\xe6\x89\x93\xe5\x8d\xb0\xe8\xae\xbe\xe7\xbd\xae";unsigned char quanbudayin[] ="1.\xe5\x85\xa8\xe9\x83\xa8\xe6\x89\x93\xe5\x8d\xb0\xef\xbc\x9a";unsigned char baojingdayin[] = "2.\xe6\x8a\xa5\xe8\xad\xa6\xe6\x89\x93\xe5\x8d\xb0\xef\xbc\x9a";unsigned char guzhangdayin[] = "3.\xe6\x95\x85\xe9\x9a\x9c\xe6\x89\x93\xe5\x8d\xb0\xef\xbc\x9a";unsigned char qitadayin[] = "4.\xe5\x85\xb6\xe4\xbb\x96\xe6\x89\x93\xe5\x8d\xb0\xef\xbc\x9a";
+unsigned char dayinsezhi[] = "\xe6\x89\x93\xe5\x8d\xb0\xe8\xae\xbe\xe7\xbd\xae";unsigned char quanbudayin[] ="1.\xe5\x85\xa8\xe9\x83\xa8\xe6\x89\x93\xe5\x8d\xb0\xef\xbc\x9a";unsigned char baojingdayin[] = "2.\xe6\x8a\xa5\xe8\xad\xa6\xe6\x89\x93\xe5\x8d\xb0\xef\xbc\x9a";unsigned char guzhangdayin[] = "3.\xe6\x95\x85\xe9\x9a\x9c\xe6\x89\x93\xe5\x8d\xb0\xef\xbc\x9a";unsigned char qitadayin[] = "4.\xe5\x85\xb6\xe4\xbb\x96\xe6\x89\x93\xe5\x8d\xb0\xef\xbc\x9a";unsigned char w6_info[] = "\xe6\x8c\x89<F1>\xe9\x94\xae\xe9\x80\x89\xe6\x8b\xa9Y/N,<\xe4\xb8\x8a\xe4\xb8\x8b>\xe9\x94\xae\xe7\xa7\xbb\xe5\x8a\xa8\xe5\x85\x89\xe6\xa0\x87\xe3\x80\x82";
 /*********************************************************************
 *
 *       Static data
 *
 **********************************************************************
 */
-
+static unsigned char cursor = 0;
 // USER START (Optionally insert additional static data)
 // USER END
 
@@ -64,7 +64,7 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
   { TEXT_CreateIndirect, guzhangdayin, ID_TEXT_3, 155, 116, 130, 30, 0, 0x0, 0 },
   { TEXT_CreateIndirect, qitadayin, ID_TEXT_4, 155, 151, 130, 30, 0, 0x0, 0 },
   { TEXT_CreateIndirect, yonghujibie, ID_TEXT_5, 6, 293, 130, 30, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, "0", ID_TEXT_6, 277, 293, 206, 28, 0, 0x0, 0 },  { EDIT_CreateIndirect, "Edit", ID_EDIT_0, 290, 46, 30, 24, 0, 0x64, 0 },  { EDIT_CreateIndirect, "Edit", ID_EDIT_1, 290, 81, 30, 24, 0, 0x64, 0 },  { EDIT_CreateIndirect, "Edit", ID_EDIT_2, 290, 116, 30, 24, 0, 0x64, 0 },  { EDIT_CreateIndirect, "Edit", ID_EDIT_3, 290, 151, 30, 24, 0, 0x64, 0 },
+  { TEXT_CreateIndirect, "0", ID_TEXT_6, 277, 293, 206, 28, 0, 0x0, 0 },  { TEXT_CreateIndirect, w6_info, ID_TEXT_7, 0, 260, 400, 28, 0, 0x0, 0 },  { EDIT_CreateIndirect, "Edit", ID_EDIT_0, 290, 46, 30, 24, 0, 1, 0 },  { EDIT_CreateIndirect, "Edit", ID_EDIT_1, 290, 81, 30, 24, 0, 1, 0 },  { EDIT_CreateIndirect, "Edit", ID_EDIT_2, 290, 116, 30, 24, 0, 1, 0 },  { EDIT_CreateIndirect, "Edit", ID_EDIT_3, 290, 151, 30, 24, 0, 1, 0 },
   // USER START (Optionally insert additional widgets)
   // USER END
 };
@@ -88,16 +88,16 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   // USER START (Optionally insert additional variables)
   // USER END
 
-  switch (pMsg->MsgId) {  case WM_PAINT :    GUI_SetColor(HFM_HEAD_BK);    GUI_FillRect(0,0,480,30);    GUI_FillRect(0,290,480,320);
-  case WM_INIT_DIALOG:
+  switch (pMsg->MsgId) {  case WM_PAINT :       GUI_SetColor(HFM_HEAD_BK);       GUI_FillRect(0,0,480,30);       GUI_FillRect(0,290,480,320);       break;
+  case WM_INIT_DIALOG:
     //
     // Initialization of 'Window'
     //        hItem = pMsg->hWin;
-        WINDOW_SetBkColor(hItem, HFM_COLOR_BK);        hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);          EDIT_EnableBlink(hItem, 300, 1);        EDIT_SetFont(hItem, GUI_FONT_20_1);        hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_1);         EDIT_EnableBlink(hItem, 300, 1);        EDIT_SetFont(hItem, GUI_FONT_20_1);        hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_2);        EDIT_EnableBlink(hItem, 300, 1);        EDIT_SetFont(hItem, GUI_FONT_20_1);        hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_3);        EDIT_EnableBlink(hItem, 300, 1);       EDIT_SetFont(hItem, GUI_FONT_20_1);
-    // USER START (Optionally insert additional code for further widget initialization)        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_6);        _hwTime[5] = hItem;
-    TEXT_SetFont(hItem, GUI_FONT_24_1);
-    TEXT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);
-    TEXT_SetText(hItem, timee);  //  EDIT_EnableBlink(hItem, 300, 1);
+        WINDOW_SetBkColor(hItem, HFM_COLOR_BK);        hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);        EDIT_SetText(hItem,"N");          EDIT_EnableBlink(hItem, 300, 1);        EDIT_SetFont(hItem, GUI_FONT_20_1);        hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_1);        EDIT_SetText(hItem,"N");         EDIT_EnableBlink(hItem, 300, 1);        EDIT_SetFont(hItem, GUI_FONT_20_1);        hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_2);        EDIT_SetText(hItem,"N");        EDIT_EnableBlink(hItem, 300, 1);        EDIT_SetFont(hItem, GUI_FONT_20_1);        hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_3);        EDIT_SetText(hItem,"N");        EDIT_EnableBlink(hItem, 300, 1);       EDIT_SetFont(hItem, GUI_FONT_20_1);
+    // USER START (Optionally insert additional code for further widget initialization)        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_6);        _hwTime[5] = hItem;
+       TEXT_SetFont(hItem, GUI_FONT_24_1);
+       TEXT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);
+       TEXT_SetText(hItem, timee);       hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_7);       TEXT_SetTextColor(hItem,HFM_COLOR_BY);  //  EDIT_EnableBlink(hItem, 300, 1);
     // USER START (Optionally insert additional code for further widget initialization)
     // USER END
     break;
@@ -116,10 +116,10 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 **********************************************************************
 */void W6_PrintSetWindowDisplay(void)
 {
-
+  cursor = 0;
 }
 void W6_PrintSetWindowProcess(void)
-{
+{      EDIT_Handle hItem;       char *tempchar;
      switch(WinKeyValue)
      {
      case GUI_KEY_ENTER://ok键
@@ -130,8 +130,7 @@ void W6_PrintSetWindowProcess(void)
      case GUI_KEY_LEFT://左键
           break;
 	 case GUI_KEY_UP://下键
-          break;
-	 case GUI_KEY_DOWN://下键
+	 case GUI_KEY_DOWN://下键         if(cursor <3)         {             cursor++;         }         else{            cursor = 0;         }	      GUI_SendKeyMsg(GUI_KEY_TAB, 1);
           break;
 	 case GUI_KEY_ESCAPE://取消键
             break;
@@ -147,7 +146,7 @@ void W6_PrintSetWindowProcess(void)
 		break;
 	case GUI_USR_KEY_RESET://复位键
 		break;
-	case GUI_KEY_F1://F1功能键
+	case GUI_KEY_F1://F1功能键       //cursor =  EDIT_GetCursorCharPos()        hItem = WM_GetDialogItem(W6_PrintSet_window, ID_EDIT_0+cursor);        EDIT_GetText(hItem,tempchar,2);        if(strcmp(tempchar,"Y")==0)        {            EDIT_SetText(hItem,"N");        }        else        {            EDIT_SetText(hItem,"Y");        }        GUI_Exec();
 		break;
 	case GUI_KEY_F2://F2功能键
 		break;

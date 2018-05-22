@@ -3,7 +3,7 @@
 #include "WM.h"
 #include "dialog.h"
 
-#include "mygui_init.h"
+#include "mygui_init.h"#include "flash.h"
 unsigned char WinIndex;//界面索引
 unsigned char WinLastIndex;unsigned char WinKeyValue = 0;unsigned char key_flag = 0;
 WM_HWIN window0;//监控界面
@@ -20,11 +20,11 @@ void mygui_init(void)
 	 WM_HideWindow(menu_window);	 WM_HideWindow(SysSet_window);	 WM_HideWindow(W4_EventQuery_window);	 WM_HideWindow(W5_TimeSet_window);	 WM_HideWindow(W6_PrintSet_window);     WM_HideWindow(W7_PasswardSet_window);     WM_HideWindow(W8_Editdevice_window);     WM_HideWindow(W9_Communication_window);     WM_HideWindow(W10_Reset_window);     WM_HideWindow(W11_Update_window);     WM_HideWindow(W12_LoopLogin_window);     WM_HideWindow(W13_CrtSet_window);     WM_HideWindow(W14_NetSet_window);     WM_HideWindow(W15_Alarm_window);     WM_HideWindow(W16_Event_window);     WM_HideWindow(W17_Sheild_window);     WM_HideWindow(W18_Output_window);     WM_HideWindow(W19_Info_window);     WM_HideWindow(W15_Alarm_window);     WM_HideWindow(W20_SheildSet_window);     WM_HideWindow(W21_OpenSet_window);     WM_HideWindow(W22_SelfCheck_window);     WM_HideWindow(W23_DeviceInfo_window);
 }
 //窗口界面函数数组
-WIN_CLASS  const WinClass[] ={    //0    {    0,
+WIN_CLASS   WinClass[] ={    //0    {    0,
     0,
     0,
     0,
-    0,
+    0,    0,
     0,0,0,0,0,0,0,0,
     W1_MainWindowDisplay,
     W1_MainWindowProcess,
@@ -35,7 +35,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     0,
     WIN_TYPE_TEXT,
     0,
-    0,
+    0,    &window0,
     0,0,0,0,0,0,0,0,
     W1_MainWindowDisplay,
     W1_MainWindowProcess,
@@ -45,7 +45,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     1,
     WIN_TYPE_MENU,
     5,
-    1,
+    1,    &menu_window,
     3,4,20,21,22,0,0,0,
     W2_menuWindowDisplay,
     W2_menuWindowProcess,
@@ -53,7 +53,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     2,
     WIN_TYPE_MENU,
     7,
-    1,
+    1,    &SysSet_window,
     5,6,7,8,9,10,11,0,
     W3_SystemWindowDisplay,
     W3_SystemWindowProcess,
@@ -61,7 +61,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     2,
     WIN_TYPE_MENU,
     5,
-    1,
+    1,    &W4_EventQuery_window,
     15,16,17,18,19,23,0,0,
     W4_EventWindowDisplay,
     W4_EventWindowProcess,
@@ -69,7 +69,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     3,
     WIN_TYPE_EDIT,
     0,
-    1,
+    1,    &W5_TimeSet_window,
     0,0,0,0,0,0,0,0,
     W5_TimeSetWindowDisplay,
     W5_TimeSetWindowProcess,
@@ -77,7 +77,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     3,
     WIN_TYPE_EDIT,
     0,
-    1,
+    1,    &W6_PrintSet_window,
     0,0,0,0,0,0,0,0,
     W6_PrintSetWindowDisplay,
     W6_PrintSetWindowProcess,
@@ -85,7 +85,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     3,
     WIN_TYPE_EDIT,
     0,
-    1,
+    1,    &W7_PasswardSet_window,
     0,0,0,0,0,0,0,0,
     W7_PassWordSetWindowDisplay,
     W7_PassWordSetWindowProcess,
@@ -93,7 +93,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     3,
     WIN_TYPE_MENU,
     0,
-    1,
+    1,    &W8_Editdevice_window,
     0,0,0,0,0,0,0,0,
     W8_EditdeviceWindowDisplay,
     W8_EditdeviceWindowProcess,
@@ -101,7 +101,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     3,
     WIN_TYPE_MENU,
     0,
-    1,
+    1,    &W9_Communication_window,
     12,13,14,0,0,0,0,0,
     W9_CommunicationWindowDisplay,
     W9_CommunicationWindowProcess,
@@ -109,7 +109,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     3,
     WIN_TYPE_EDIT,
     0,
-    1,
+    1,    &W10_Reset_window,
     0,0,0,0,0,0,0,0,
     W10_ResetWindowDisplay,
     W10_ResetWindowProcess,
@@ -117,7 +117,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     3,
     WIN_TYPE_TEXT,
     0,
-    1,
+    1,    &W11_Update_window,
     0,0,0,0,0,0,0,0,
     W11_UpdateWindowDisplay,
     W11_UpdateWindowProcess,
@@ -125,7 +125,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     9,
     WIN_TYPE_TEXT,
     0,
-    1,
+    1,    &W12_LoopLogin_window,
     0,0,0,0,0,0,0,0,
     W12_LooploginWindowDisplay,
     W12_LooploginWindowProcess,
@@ -133,7 +133,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     9,
     WIN_TYPE_TEXT,
     0,
-    1,
+    1,    &W13_CrtSet_window,
     0,0,0,0,0,0,0,0,
     W13_CrtSetWindowDisplay,
     W13_CrtSetWindowProcess,
@@ -141,7 +141,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     9,
     WIN_TYPE_TEXT,
     0,
-    1,
+    1,    &W14_NetSet_window,
     0,0,0,0,0,0,0,0,
     W14_NetSetWindowDisplay,
     W14_NetSetWindowProcess,
@@ -149,7 +149,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     4,
     WIN_TYPE_TEXT,
     0,
-    1,
+    1,    &W15_Alarm_window,
     0,0,0,0,0,0,0,0,
     W15_AlarmQueryWindowDisplay,
     W15_AlarmQueryWindowProcess,
@@ -157,7 +157,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     4,
     WIN_TYPE_TEXT,
     0,
-    1,
+    1,    &W16_Event_window,
     0,0,0,0,0,0,0,0,
     W16_EventQueryWindowDisplay,
     W16_EventQueryWindowProcess,
@@ -165,7 +165,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     4,
     WIN_TYPE_TEXT,
     0,
-    1,
+    1,    &W17_Sheild_window,
     0,0,0,0,0,0,0,0,
     W17_SheildQueryWindowDisplay,
     W17_SheildQueryWindowProcess,
@@ -173,7 +173,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     4,
     WIN_TYPE_TEXT,
     0,
-    1,
+    1,    &W18_Output_window,
     0,0,0,0,0,0,0,0,
     W18_OutQueryWindowDisplay,
     W18_OutQueryWindowProcess,
@@ -181,7 +181,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     4,
     WIN_TYPE_TEXT,
     0,
-    1,
+    1,    &W19_Info_window,
     0,0,0,0,0,0,0,0,
     W19_InfoQueryWindowDisplay,
     W19_InfoQueryWindowProcess,
@@ -189,7 +189,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     2,
     WIN_TYPE_EDIT,
     0,
-    1,
+    1,    &W20_SheildSet_window,
     0,0,0,0,0,0,0,0,
     W20_SheildSetWindowDisplay,
     W20_SheildSetWindowProcess,
@@ -197,7 +197,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     2,
     WIN_TYPE_EDIT,
     0,
-    1,
+    1,    &W21_OpenSet_window,
     0,0,0,0,0,0,0,0,
     W21_OpenSetWindowDisplay,
     W21_OpenSetWindowProcess,
@@ -205,7 +205,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     2,
     WIN_TYPE_TEXT,
     0,
-    1,
+    1,    &W22_SelfCheck_window,
     0,0,0,0,0,0,0,0,
     W22_SelfCheckWindowDisplay,
     W22_SelfCheckWindowProcess,
@@ -213,7 +213,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     4,
     WIN_TYPE_TEXT,
     0,
-    1,
+    1,    &W23_DeviceInfo_window,
     0,0,0,0,0,0,0,0,
     W23_DeviceQueryWindowDisplay,
     W23_DeviceQueryWindowProcess,
@@ -222,7 +222,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     1,
     WIN_TYPE_TEXT,
     0,
-    1,
+    1,    &W24_AlarmWiM_window,
     0,0,0,0,0,0,0,0,
     W24_AlarmWindowDisplay,
     W24_AlarmWindowProcess,
@@ -230,7 +230,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     1,
     WIN_TYPE_TEXT,
     0,
-    1,
+    1,    &W25_Faultwindow,
     0,0,0,0,0,0,0,0,
     W25_FaultWindowDisplay,
     W25_FaultWindowProcess,
@@ -238,7 +238,7 @@ WIN_CLASS  const WinClass[] ={    //0    {    0,
     1,
     WIN_TYPE_TEXT,
     0,
-    1,
+    1,    &W26_Sheildwindow,
     0,0,0,0,0,0,0,0,
     W26_SheildWindowDisplay,
     W26_SheildWindowProcess,
@@ -348,4 +348,4 @@ void Key_Task(void)
    {
       WinKeyProcess();
    }
-}
+}/*********************存储初始化*************************************/ void myflash_init(void){    int i;    unsigned char tempflash[4096];    /*****************************************************************************//**********************打开文件，如果打开失败，创建新的文件***************************************/    memset(tempflash,0xff,4096);    if(flash = fopen("flash.bin","r") == NULL)    {       flash = fopen("flash.bin","wb+");       for(i = 0;i < 1024;i++)       {           fwrite(tempflash,1,4096,flash);       }       fclose(flash);    }    Flash_Read_SysSet((unsigned char*)&system_config.Level_1_Password[0]);    if(system_config.Level_1_Password[0] == 0xff)    {        //初始化系统设置结构体        memset((unsigned char*)&system_config.Level_1_Password[0],0x31,8);        memset((unsigned char*)&system_config.Level_2_Password[0],0x32,8);        memset((unsigned char*)&system_config.Level_2_Password[0],0x33,8);        memset((unsigned char*)&system_config.R1[0],0,212);        Flash_Write_SysSet((unsigned char*)&system_config.Level_1_Password[0]);    }}/**********************存储初始化*************************************/

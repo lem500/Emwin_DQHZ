@@ -67,7 +67,6 @@
 			<Add library="GUI/Library/GUI.a" />
 			<Add library="Simulation/GUISim.a" />
 		</Linker>
-		<Unit filename="Application/GUIDEMO.h" />
 		<Unit filename="Config/GUIConf.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -240,9 +239,11 @@
 		<Unit filename="usr/W_messagebox.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="usr/datastruct.h" />
 		<Unit filename="usr/flash.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="usr/flash.h" />
 		<Unit filename="usr/gtya112-30.h" />
 		<Unit filename="usr/keyboard1.c">
 			<Option compilerVar="CC" />

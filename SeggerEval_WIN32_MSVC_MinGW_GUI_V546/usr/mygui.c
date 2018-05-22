@@ -9,17 +9,17 @@
 //#include "../usr/stay24.h"
 static unsigned char lastsec = 0;
 unsigned char timee[30];SYSTEM_CONFIG systemset;//系统设置#if CODEBLACK_FLAG
-unsigned char tempflash[4096];FILE *flash; //定义存储文件指针#endif
+FILE *flash; //定义存储文件指针#endif
 void Dis_time(void)
 {
-    int i;
+    int i;   /* GUI_SetBkColor(HFM_HEAD_BK);    GUI_SetColor(GUI_BLACK);    GUI_SetFont(GUI_FONT_20_ASCII);    GUI_DispStringAt(timee,277,293);*/
     for(i = 0;i < 30;i++)
-    {
+    {
     if(WM_IsWindow(_hwTime[i])&&WM_IsVisible(_hwTime[i])){            TEXT_SetFont(_hwTime[i], GUI_FONT_24_1);    TEXT_SetTextAlign(_hwTime[i], GUI_TA_LEFT | GUI_TA_VCENTER);
     TEXT_SetText(_hwTime[i], timee);//
    // break;
-    }
-    }
+
+    }    }
 
 
 
@@ -31,8 +31,8 @@ void MainTask(void) {    int i;
     memcpy(&utcTime, gmtime(&t), sizeof(struct tm));
     u = localtime(&t);
 	 WM_SetCreateFlags(WM_CF_MEMDEV);
-	GUI_Init();
-	mygui_init();/*********************************************************************************************************************************************/ SIM_HARDKEY_SetCallback(0, _cbKey1); SIM_HARDKEY_SetCallback(1, _cbKey2); SIM_HARDKEY_SetCallback(2, _cbKey3); SIM_HARDKEY_SetCallback(3, _cbKey_Alarm); SIM_HARDKEY_SetCallback(4, _cbKey4);// SIM_HARDKEY_SetCallback(5, _cbKey_SELIENCE); SIM_HARDKEY_SetCallback(6, _cbKey_RESET); //SIM_HARDKEY_SetCallback(7, _cbKey4);// SIM_HARDKEY_SetCallback(8, _cbKey_UP); SIM_HARDKEY_SetCallback(9, _cbKey4); SIM_HARDKEY_SetCallback(10, _cbKey5); SIM_HARDKEY_SetCallback(11, _cbKey6); SIM_HARDKEY_SetCallback(12, _cbKey_Fault);// SIM_HARDKEY_SetCallback(14, _cbKey7); SIM_HARDKEY_SetCallback(15, _cbKey_LEFT); SIM_HARDKEY_SetCallback(16, _cbKey_RIGHT); SIM_HARDKEY_SetCallback(19, _cbKey_Home); SIM_HARDKEY_SetCallback(24, _cbKey7); SIM_HARDKEY_SetCallback(25, _cbKey8); SIM_HARDKEY_SetCallback(26, _cbKey9); SIM_HARDKEY_SetCallback(27, _cbKey_Sheild); SIM_HARDKEY_SetCallback(28, _cbKey_DOWN); SIM_HARDKEY_SetCallback(30, _cbKey_F1); SIM_HARDKEY_SetCallback(32, _cbKey_F2); SIM_HARDKEY_SetCallback(34, _cbKey_ESCAPE); SIM_HARDKEY_SetCallback(35, _cbKey0); SIM_HARDKEY_SetCallback(36, _cbKey_ENTER); SIM_HARDKEY_SetCallback(37, _cbKey_Out);/*****************************************************************************//**********************打开文件，如果打开失败，创建新的文件***************************************/    memset(tempflash,0xff,4096);    if(flash = fopen("flash.bin","r") == NULL)    {       flash = fopen("flash.bin","wb+");       for(i = 0;i < 1024;i++)       {           fwrite(tempflash,1,4096,flash);       }       fclose(flash);    }
+	GUI_Init();    myflash_init();
+	mygui_init();/*********************************************************************************************************************************************/ SIM_HARDKEY_SetCallback(0, _cbKey1); SIM_HARDKEY_SetCallback(1, _cbKey2); SIM_HARDKEY_SetCallback(2, _cbKey3); SIM_HARDKEY_SetCallback(3, _cbKey_Alarm); SIM_HARDKEY_SetCallback(4, _cbKey4);// SIM_HARDKEY_SetCallback(5, _cbKey_SELIENCE); SIM_HARDKEY_SetCallback(6, _cbKey_RESET); //SIM_HARDKEY_SetCallback(7, _cbKey4);// SIM_HARDKEY_SetCallback(8, _cbKey_UP); SIM_HARDKEY_SetCallback(9, _cbKey4); SIM_HARDKEY_SetCallback(10, _cbKey5); SIM_HARDKEY_SetCallback(11, _cbKey6); SIM_HARDKEY_SetCallback(12, _cbKey_Fault);// SIM_HARDKEY_SetCallback(14, _cbKey7); SIM_HARDKEY_SetCallback(15, _cbKey_LEFT); SIM_HARDKEY_SetCallback(16, _cbKey_RIGHT); SIM_HARDKEY_SetCallback(19, _cbKey_Home); SIM_HARDKEY_SetCallback(24, _cbKey7); SIM_HARDKEY_SetCallback(25, _cbKey8); SIM_HARDKEY_SetCallback(26, _cbKey9); SIM_HARDKEY_SetCallback(27, _cbKey_Sheild); SIM_HARDKEY_SetCallback(28, _cbKey_DOWN); SIM_HARDKEY_SetCallback(30, _cbKey_F1); SIM_HARDKEY_SetCallback(32, _cbKey_F2); SIM_HARDKEY_SetCallback(34, _cbKey_ESCAPE); SIM_HARDKEY_SetCallback(35, _cbKey0); SIM_HARDKEY_SetCallback(36, _cbKey_ENTER); SIM_HARDKEY_SetCallback(37, _cbKey_Out);
 	//WinIndex = 0;
 
 

@@ -1,56 +1,1 @@
-#ifndef _DATASTRUCT_H
-#define _DATASTRUCT_H
-
-
-//ç³»ç»Ÿé…ç½®æ•°æ®ç»“æ„ï¼Œ256BYTES
-typedef struct
-{
-	U8	Level_1_Password[8];    //ä¸€çº§å¯†ç      1111
-	U8	Level_2_Password[8];    //äºŒçº§å¯†ç      2222
-	U8	Level_3_Password[8];    //ä¸‰çº§å¯†ç      3333
-
-	U8	R1[8];    				//æ•°ç»„å¤‡ç”¨
-	U8	R2[8];    				//æ•°ç»„å¤‡ç”¨
-	U8	R3[8];    				//æ•°ç»„å¤‡ç”¨   48
-	
-	U16	ControllerID;           //æœºå·         1  
-    U16 IP_Port;                //æœåŠ¡å™¨ç«¯å£å· 0
-	U16	R16_1;           		//16ä½å¤‡ç”¨     1  
-    U16 R16_2;                	//16ä½å¤‡ç”¨     0
-	U16	R16_3;           		//16ä½å¤‡ç”¨     1  
-    U16 R16_4;                	//16ä½å¤‡ç”¨     0
-	U16	R16_5;           		//16ä½å¤‡ç”¨     1  
-    U16 R16_6;                	//16ä½å¤‡ç”¨   16  0            
-    
-	U8	Printer;       			//å®æ—¶æ‰“å°     bit0:å…¨éƒ¨bit1:ç«è­¦bit2:è”åŠ¨bit3:æ•…éšœbit4:å…¶ä»–   
-	U8	AutoControl;            //è‡ªåŠ¨æ§åˆ¶     
-	U8	ManulControl;           //æ‰‹åŠ¨æ§åˆ¶
-	U8  SoundControl;           //è”åŠ¨è¾“å‡ºå£°å…‰æ˜¯å¦å—è‡ªåŠ¨å½±å“
-    	
-	U8	CRTConnect;          	//CRTé€šè®¯ï¼Œå¯¹åº”ç«è­¦ä¼ è¾“ bit3      bit2 1å±è”½ 0æ­£å¸¸    bit1    bit0
-	U8	CRTMode;          		//CRTæ¨¡å¼		   
-
-    U8  IP_Mode;                //IPæ¨¡å¼      0
-    U8  IP_Reserve;             //IPä¿ç•™      0
-    
-	U8  SoundStatus;            //å£°å…‰æ ‡å¿— BIT0,0-ä¸å­˜åœ¨ï¼Œ1-å­˜åœ¨ï¼›BIT1,1-å±è”½ï¼Œ0-æ­£å¸¸ï¼›
-	U8  BroadSoundSwitch;		//å¹¿æ’­å£°å…‰åˆ‡æ¢å…è®¸
-	U8  BroadPanelAddess;		//å¹¿æ’­ç›˜åœ°å€
-	U8  BroadTimer;				//å¹¿æ’­æ—¶é—´
-	U8  SoundTimer;				//å£°å…‰æ—¶é—´
-	U8	BroadTrigger;			//å‡ ä¸ªç«è­¦è§¦å‘å¹¿æ’­å–å€¼èŒƒå›´1~5
-	U8	BroadAutoLimit;			//å¹¿æ’­æ˜¯å¦å—è‡ªåŠ¨çŠ¶æ€é™åˆ¶0:ä¸å—é™åˆ¶1:å—é™åˆ¶
-	U8	BuildingPosition;		//æ¥¼å·ä½ç½®å¯¹ç…§è¡¨è®¾ç½®0:ä¸ä»¥æ¥¼å·ä½ç½®å¯¹ç…§è¡¨çš„æ–¹å¼æ˜¾ç¤º1:ä»¥æ¥¼å·ä½ç½®å¯¹ç…§è¡¨çš„æ–¹å¼æ˜¾ç¤º
-    U8  Reserve2[176];          //ä¿ç•™       
-}SYSTEM_CONFIG;
-
-
-
-
-
-
-
-
-
-#endif
-
+#ifndef _DATASTRUCT_H#define _DATASTRUCT_H//ÏµÍ³ÅäÖÃÊı¾İ½á¹¹£¬256BYTEStypedef struct{	U8	Level_1_Password[8];    //Ò»¼¶ÃÜÂë     1111	U8	Level_2_Password[8];    //¶ş¼¶ÃÜÂë     2222	U8	Level_3_Password[8];    //Èı¼¶ÃÜÂë     3333	U8	R1[8];    				//Êı×é±¸ÓÃ	U8	R2[8];    				//Êı×é±¸ÓÃ	U8	R3[8];    				//Êı×é±¸ÓÃ   48	U16	ControllerID;           //»úºÅ         1    U16 IP_Port;                //·şÎñÆ÷¶Ë¿ÚºÅ 0	U16	R16_1;           		//16Î»±¸ÓÃ     1    U16 R16_2;                	//16Î»±¸ÓÃ     0	U16	R16_3;           		//16Î»±¸ÓÃ     1    U16 R16_4;                	//16Î»±¸ÓÃ     0	U16	R16_5;           		//16Î»±¸ÓÃ     1    U16 R16_6;                	//16Î»±¸ÓÃ   16  0	U8	Printer;       			//ÊµÊ±´òÓ¡     bit0:È«²¿bit1:»ğ¾¯bit2:Áª¶¯bit3:¹ÊÕÏbit4:ÆäËû	U8	AutoControl;            //×Ô¶¯¿ØÖÆ	U8	ManulControl;           //ÊÖ¶¯¿ØÖÆ	U8  SoundControl;           //Áª¶¯Êä³öÉù¹âÊÇ·ñÊÜ×Ô¶¯Ó°Ïì	U8	CRTConnect;          	//CRTÍ¨Ñ¶£¬¶ÔÓ¦»ğ¾¯´«Êä bit3      bit2 1ÆÁ±Î 0Õı³£    bit1    bit0	U8	CRTMode;          		//CRTÄ£Ê½    U8  IP_Mode;                //IPÄ£Ê½      0    U8  IP_Reserve;             //IP±£Áô      0	U8  SoundStatus;            //Éù¹â±êÖ¾ BIT0,0-²»´æÔÚ£¬1-´æÔÚ£»BIT1,1-ÆÁ±Î£¬0-Õı³££»	U8  BroadSoundSwitch;		//¹ã²¥Éù¹âÇĞ»»ÔÊĞí	U8  BroadPanelAddess;		//¹ã²¥ÅÌµØÖ·	U8  BroadTimer;				//¹ã²¥Ê±¼ä	U8  SoundTimer;				//Éù¹âÊ±¼ä	U8	BroadTrigger;			//¼¸¸ö»ğ¾¯´¥·¢¹ã²¥È¡Öµ·¶Î§1~5	U8	BroadAutoLimit;			//¹ã²¥ÊÇ·ñÊÜ×Ô¶¯×´Ì¬ÏŞÖÆ0:²»ÊÜÏŞÖÆ1:ÊÜÏŞÖÆ	U8	BuildingPosition;		//Â¥ºÅÎ»ÖÃ¶ÔÕÕ±íÉèÖÃ0:²»ÒÔÂ¥ºÅÎ»ÖÃ¶ÔÕÕ±íµÄ·½Ê½ÏÔÊ¾1:ÒÔÂ¥ºÅÎ»ÖÃ¶ÔÕÕ±íµÄ·½Ê½ÏÔÊ¾    U8  Reserve2[176];          //±£Áô}SYSTEM_CONFIG;#endif

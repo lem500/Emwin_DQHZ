@@ -38,8 +38,8 @@ Purpose     : Windows Simulator configuration
 *   Called during the initialization process in order to configure
 *   the simulator.
 */
-void SIM_X_Config() {    SIM_GUI_UseCustomBitmaps();    SIM_GUI_ShowDevice(1);
-  SIM_GUI_SetLCDPos(200, 168);  SIM_GUI_SetTransColor(0xff0000);     // Define the transparent color
+void SIM_X_Config() {    SIM_GUI_UseCustomBitmaps();
+  SIM_GUI_SetLCDPos(200, 168);  SIM_GUI_SetTransColor(0xff0000);     // Define the transparent color
 }
 
 #else
