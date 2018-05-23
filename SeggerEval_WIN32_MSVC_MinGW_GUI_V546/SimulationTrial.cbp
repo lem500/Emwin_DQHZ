@@ -158,6 +158,15 @@
 		<Unit filename="Simulation/WinMain.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="usr/GUICharPEx.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="usr/GUI_Font24.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="usr/GUI_UC_EncodeNone.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="usr/W10_ResetWindow.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -234,6 +243,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="usr/W9_CommunicationWindow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="usr/W_PasswordMessageBox.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="usr/W_messagebox.c">

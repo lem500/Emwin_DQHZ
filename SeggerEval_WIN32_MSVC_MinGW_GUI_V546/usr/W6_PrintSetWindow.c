@@ -21,7 +21,7 @@
 // USER START (Optionally insert additional includes)
 // USER END
 
-#include "DIALOG.h"#include "mygui_init.h"
+#include "DIALOG.h"#include "mygui_init.h"#include "flash.h"
 
 /*********************************************************************
 *
@@ -88,7 +88,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   // USER START (Optionally insert additional variables)
   // USER END
 
-  switch (pMsg->MsgId) {  case WM_PAINT :       GUI_SetColor(HFM_HEAD_BK);       GUI_FillRect(0,0,480,30);       GUI_FillRect(0,290,480,320);       break;
+  switch (pMsg->MsgId) {  case WM_PAINT :       GUI_SetColor(HFM_HEAD_BK);       GUI_FillRect(0,0,480,30);       GUI_FillRect(0,290,480,320);       break;
   case WM_INIT_DIALOG:
     //
     // Initialization of 'Window'
@@ -115,15 +115,15 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 *
 **********************************************************************
 */void W6_PrintSetWindowDisplay(void)
-{
-  cursor = 0;
+{        int i;    EDIT_Handle hItem;    cursor = 0;    Flash_Read_SysSet((unsigned char*)&system_config.Level_1_Password[0]);    for(i = 0;i <4;i++)   {      hItem = WM_GetDialogItem(W6_PrintSet_window, ID_EDIT_0+i);      if(system_config.Printer&(1<<i))      {        EDIT_SetText(hItem,"Y");      }      else      {        EDIT_SetText(hItem,"N");      }   }
+  cursor = 0;
 }
 void W6_PrintSetWindowProcess(void)
-{      EDIT_Handle hItem;       char *tempchar;
+{    int i;    static flag = 0;      EDIT_Handle hItem;       char *tempchar;
      switch(WinKeyValue)
      {
      case GUI_KEY_ENTER://ok键
-
+           if(flag == 0 )           {             flag = 1;              Flash_Write_SysSet((unsigned char*)&system_config.Level_1_Password[0]);             Show_Message(WIN_SUCESS_WRITE);           }           else           {             flag = 0;             WM_HideWin(W_MessageBox);           }
           break;
      case GUI_KEY_HOME://菜单按钮
           break;
@@ -146,7 +146,7 @@ void W6_PrintSetWindowProcess(void)
 		break;
 	case GUI_USR_KEY_RESET://复位键
 		break;
-	case GUI_KEY_F1://F1功能键       //cursor =  EDIT_GetCursorCharPos()        hItem = WM_GetDialogItem(W6_PrintSet_window, ID_EDIT_0+cursor);        EDIT_GetText(hItem,tempchar,2);        if(strcmp(tempchar,"Y")==0)        {            EDIT_SetText(hItem,"N");        }        else        {            EDIT_SetText(hItem,"Y");        }        GUI_Exec();
+	case GUI_KEY_F1://F1功能键       //cursor =  EDIT_GetCursorCharPos()        hItem = WM_GetDialogItem(W6_PrintSet_window, ID_EDIT_0+cursor);        EDIT_GetText(hItem,tempchar,2);        if(strcmp(tempchar,"Y")==0)        {            EDIT_SetText(hItem,"N");            system_config.Printer &= ~(1<<cursor);        }        else        {            EDIT_SetText(hItem,"Y");            system_config.Printer |= (1<<cursor);        }        GUI_Exec();
 		break;
 	case GUI_KEY_F2://F2功能键
 		break;

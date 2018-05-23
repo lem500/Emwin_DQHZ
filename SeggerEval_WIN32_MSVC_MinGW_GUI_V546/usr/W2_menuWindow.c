@@ -23,7 +23,7 @@
 
 #include "DIALOG.h"
 #include "mygui_init.h"
-//#include "../usr/stay24.h"
+//#include "../usr/stay24.h"unsigned char WinPasswordMode = 0;
 unsigned char const zhucaidan[] = "\xe4\xb8\xbb\xe8\x8f\x9c\xe5\x8d\x95";//主菜单unsigned char const xitongshezhi[] = "1.\xe7\xb3\xbb\xe7\xbb\x9f\xe8\xae\xbe\xe7\xbd\xae";//系统设置unsigned char const xinxichaxun[] = "2.\xe4\xbf\xa1\xe6\x81\xaf\xe6\x9f\xa5\xe8\xaf\xa2";//信息查询unsigned char const pingbi[] = "3.\xe5\xb1\x8f\xe8\x94\xbd";//屏蔽unsigned char const kaifang[] = "4.\xe5\xbc\x80\xe6\x94\xbe";//开放unsigned char const zijian[] = "5.\xe8\x87\xaa\xe6\xa3\x80";//自检
 /*********************************************************************
 *
@@ -151,7 +151,7 @@ void W2_menuWindowProcess(void)
 		break;
 	case '0':
 		break;
-	case '1':
+	case '1':         WinPasswordMode = WIN_PASSWORD_SET;         WinLoad(WINDOW_W27_PASSWORDWIN);	    break;
 	case '2':
 	case '3':
 	case '4':

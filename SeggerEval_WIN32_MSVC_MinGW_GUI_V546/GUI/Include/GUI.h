@@ -2090,7 +2090,7 @@ extern GUI_CONST_STORAGE GUI_FONT GUI_FontComic24B_ASCII, GUI_FontComic24B_1;
 /*********************************************************************
 *
 *       Macros to be used
-*/
+*/extern GUI_CONST_STORAGE  GUI_FONT GUI_FontHZ24;#define GUI_FONT_HZ24           &GUI_FontHZ24
 //
 // Proportional fonts
 //
