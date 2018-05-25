@@ -33,7 +33,14 @@ unsigned char xinxchaxun[]   = "\xe4\xbf\xa1\xe6\x81\xaf\xe6\x9f\xa5\xe8\xaf\xa2
 
 // USER START (Optionally insert additional defines)
 // USER END
-
+#define ID_WINDOW_0 (GUI_ID_USER + 0x00)
+#define ID_TEXT_0 (GUI_ID_USER + 0x01)
+#define ID_TEXT_1 (GUI_ID_USER + 0x02)
+#define ID_TEXT_2 (GUI_ID_USER + 0x03)
+#define ID_TEXT_3 (GUI_ID_USER + 0x04)
+#define ID_TEXT_4 (GUI_ID_USER + 0x05)
+#define ID_TEXT_5 (GUI_ID_USER + 0x06)
+#define ID_TEXT_6 (GUI_ID_USER + 0x07)#define ID_TEXT_7 (GUI_ID_USER + 0x08)#define ID_TEXT_8 (GUI_ID_USER + 0x09)
 /*********************************************************************
 *
 *       Static data
@@ -49,7 +56,7 @@ unsigned char xinxchaxun[]   = "\xe4\xbf\xa1\xe6\x81\xaf\xe6\x9f\xa5\xe8\xaf\xa2
 *       _aDialogCreate
 */
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
-  { WINDOW_CreateIndirect, "Framewin", ID_FRAMEWIN_3,  0, 0, 480, 325, 0, 0x0, 0 },
+  { WINDOW_CreateIndirect, "Framewin", ID_WINDOW_0,  0, 0, 480, 325, 0, 0x0, 0 },
   { TEXT_CreateIndirect, xinxchaxun, ID_TEXT_0, 6, 1, 130, 30, 0, 0x0, 0 },
   { TEXT_CreateIndirect, baojingxinxi, ID_TEXT_1, 155, 46, 130, 30, 0, 0x0, 0 },
   { TEXT_CreateIndirect, shijianxinxi, ID_TEXT_2, 155, 81, 130, 30, 0, 0x0, 0 },

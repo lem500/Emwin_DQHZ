@@ -36,7 +36,6 @@
 
 // USER START (Optionally insert additional defines)
 // USER END
-
 /*********************************************************************
 *
 *       Static data
