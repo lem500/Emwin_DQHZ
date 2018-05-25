@@ -76,11 +76,12 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
 *       _cbDialog
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
-  WM_HWIN hItem;
+  WM_HWIN hItem;  unsigned char userstring[30];
   // USER START (Optionally insert additional variables)
   // USER END
 
-  switch (pMsg->MsgId) {  case WM_PAINT :     GUI_SetColor(HFM_HEAD_BK);     GUI_FillRect(0,0,480,30);     GUI_FillRect(0,290,480,320);     GUI_SetBkColor(HFM_COLOR_BK);     GUI_SetColor(GUI_BLACK);     GUI_DispStringAt("-",219,53);     hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);     EDIT_EnableBlink(hItem, 300, 1);    break;
+  switch (pMsg->MsgId) {  case WM_PAINT :       if(WM_Paint_Flag == 1)       {           WM_Paint_Flag = 0;          GUI_SetColor(HFM_HEAD_BK);          GUI_FillRect(0,0,480,30);          GUI_FillRect(0,290,480,320);          GUI_SetBkColor(HFM_COLOR_BK);          GUI_SetColor(GUI_BLACK);          GUI_DispStringAt("-",219,53);          hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);          EDIT_EnableBlink(hItem, 300, 1);           //显示用户级别          hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_1);          sprintf(userstring,"\xe7\x94\xa8\xe6\x88\xb7\xe7\xba\xa7\xe5\x88\xab:%d",userlevel);
+          TEXT_SetText(hItem, userstring);//       }    break;
   case WM_INIT_DIALOG:
     //
     // Initialization of 'Window'

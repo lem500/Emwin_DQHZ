@@ -78,18 +78,19 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
 *       _cbDialog
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
-  WM_HWIN hItem;
+  WM_HWIN hItem;  unsigned char userstring[30];
   // USER START (Optionally insert additional variables)
   // USER END
 
-  switch (pMsg->MsgId) {  case WM_PAINT :     GUI_SetColor(HFM_HEAD_BK);     GUI_FillRect(0,0,480,30);     GUI_FillRect(0,290,480,320);     GUI_SetBkColor(HFM_COLOR_BK);     GUI_SetColor(HFM_COLOR_BY);     GUI_SetFont(&GUI_Fontstay24);     GUI_DispStringAt(infoo1,240,142);      GUI_DispStringAt(inff002,240,182);    break;
+  switch (pMsg->MsgId) {  case WM_PAINT :    if(WM_Paint_Flag == 1)    {        WM_Paint_Flag = 0;       GUI_SetColor(HFM_HEAD_BK);       GUI_FillRect(0,0,480,30);       GUI_FillRect(0,290,480,320);       GUI_SetBkColor(HFM_COLOR_BK);       GUI_SetColor(HFM_COLOR_BY);       GUI_SetFont(&GUI_Fontstay24);       GUI_DispStringAt(infoo1,240,142);       GUI_DispStringAt(inff002,240,182);          //ÏÔÊ¾ÃÜÂë¼¶±ð       hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_1);       sprintf(userstring,"\xe7\x94\xa8\xe6\x88\xb7\xe7\xba\xa7\xe5\x88\xab:%d",userlevel);
+       TEXT_SetText(hItem, userstring);//    }    break;
   case WM_INIT_DIALOG:
     //
     // Initialization of 'Window'
     //
         hItem = pMsg->hWin;
         WINDOW_SetBkColor(hItem, HFM_COLOR_BK);
-    // USER START (Optionally insert additional code for further widget initialization)        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_0);        _hwTime[12] = hItem;
+    // USER START (Optionally insert additional code for further widget initialization)        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_0);        _hwTime[12] = hItem;
        TEXT_SetFont(hItem, GUI_FONT_24_1);
        TEXT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);
        TEXT_SetText(hItem, timee);       hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);       EDIT_EnableBlink(hItem, 300, 1);       EDIT_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);       EDIT_SetFont(hItem, GUI_FONT_20_ASCII);     //  EDIT_EnableBlink(hItem, 300, 1);    //    // Initialization of 'Edit'    //      hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_1);      EDIT_EnableBlink(hItem, 300, 1);      EDIT_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);      EDIT_SetFont(hItem, GUI_FONT_20_ASCII);    //    // Initialization of 'Edit'    //      hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_2);      EDIT_EnableBlink(hItem, 300, 1);      EDIT_SetFont(hItem, GUI_FONT_20_1);      EDIT_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);    //    // Initialization of 'Edit'    //     hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_3);     EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetFont(hItem, GUI_FONT_20_1);     EDIT_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);

@@ -75,11 +75,12 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
 *       _cbDialog
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
-  WM_HWIN hItem;  HEADER_Handle hHeader;
+  WM_HWIN hItem;  HEADER_Handle hHeader;  unsigned char userstring[30];
   // USER START (Optionally insert additional variables)
   // USER END
 
-  switch (pMsg->MsgId) {  case WM_PAINT :     GUI_SetColor(GUI_YELLOW);     GUI_FillRect(0,0,480,30);     GUI_SetColor(HFM_HEAD_BK);     GUI_FillRect(0,290,480,320);     GUI_SetBkColor(GUI_YELLOW);          GUI_SetFont(&GUI_Fontstay24);     GUI_SetColor(GUI_BLACK);    // GUI_SetBkColor(GUI_RED);     GUI_DispStringAt(guzhangzongshu, 6, 1);     GUI_DispStringAt("002", 120, 1);          GUI_SetColor(HFM_COLOR_BK1);     GUI_FillRect(0,32,480,62);     GUI_SetColor(GUI_BLACK);     GUI_SetBkColor(HFM_COLOR_BK1);    GUI_DispStringAt("001", 1, 32);     GUI_DispStringAt(cewenshi, 75, 32);     GUI_DispStringAt("001", 75, 31);    GUI_DispStringAt(bujianguzhang, 204, 32);     GUI_SetFont(&GUI_Font16_ASCII);     GUI_DispStringAt("2018-05-16 11:03:01", 355, 35);     GUI_SetBkColor(HFM_COLOR_BK);     GUI_SetColor(GUI_BLACK);     GUI_SetFont(&GUI_Fontstay24);     GUI_DispStringAt("002", 1, 62);     GUI_DispStringAt(cewenshi, 75, 62);     GUI_DispStringAt(bujianguzhang, 204, 62); //    GUI_DispStringAt(baojingzhii, 205, 62);     GUI_SetFont(&GUI_Font16_ASCII);     GUI_DispStringAt("2018-05-16 11:03:01", 355, 66);    break;
+  switch (pMsg->MsgId) {  case WM_PAINT :    if(WM_Paint_Flag == 1)    {        WM_Paint_Flag = 0;     GUI_SetColor(GUI_YELLOW);     GUI_FillRect(0,0,480,30);     GUI_SetColor(HFM_HEAD_BK);     GUI_FillRect(0,290,480,320);     GUI_SetBkColor(GUI_YELLOW);          GUI_SetFont(&GUI_Fontstay24);     GUI_SetColor(GUI_BLACK);    // GUI_SetBkColor(GUI_RED);     GUI_DispStringAt(guzhangzongshu, 6, 1);     GUI_DispStringAt("002", 120, 1);     GUI_SetColor(HFM_COLOR_BK1);     GUI_FillRect(0,32,480,62);     GUI_SetColor(GUI_BLACK);     GUI_SetBkColor(HFM_COLOR_BK1);     GUI_DispStringAt("001", 1, 32);     GUI_DispStringAt(cewenshi, 75, 32);     GUI_DispStringAt("001", 75, 31);     GUI_DispStringAt(bujianguzhang, 204, 32);     GUI_SetFont(&GUI_Font16_ASCII);     GUI_DispStringAt("2018-05-16 11:03:01", 355, 35);     GUI_SetBkColor(HFM_COLOR_BK);     GUI_SetColor(GUI_BLACK);     GUI_SetFont(&GUI_Fontstay24);     GUI_DispStringAt("002", 1, 62);     GUI_DispStringAt(cewenshi, 75, 62);     GUI_DispStringAt(bujianguzhang, 204, 62); //    GUI_DispStringAt(baojingzhii, 205, 62);     GUI_SetFont(&GUI_Font16_ASCII);     GUI_DispStringAt("2018-05-16 11:03:01", 355, 66);       //显示用户级别       hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_1);       sprintf(userstring,"\xe7\x94\xa8\xe6\x88\xb7\xe7\xba\xa7\xe5\x88\xab:%d",userlevel);
+       TEXT_SetText(hItem, userstring);//    }    break;
   case WM_INIT_DIALOG:
     //
     // Initialization of 'Window'

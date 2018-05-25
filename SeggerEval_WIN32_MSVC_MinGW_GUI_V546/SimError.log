@@ -1,3 +1,10 @@
 
-EDIT.c:
-Wrong handle type or Object not init'ed in EDIT_LockH()
+Function may not be called from within a paint event
+Function may not be called from within a paint event
+Function may not be called from within a paint event
+Function may not be called from within a paint event
+Function may not be called from within a paint event
+Function may not be called from within a paint event
+Function may not be called from within a paint event
+Function may not be called from within a paint event
+Function may not be called from within a paint event

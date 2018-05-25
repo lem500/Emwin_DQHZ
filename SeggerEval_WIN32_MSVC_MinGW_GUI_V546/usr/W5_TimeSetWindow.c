@@ -86,11 +86,12 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
 static void _cbDialog(WM_MESSAGE * pMsg) {
   WM_HWIN hItem;
   int     NCode;
-  int     Id;
+  int     Id;  unsigned char userstring[30];
   // USER START (Optionally insert additional variables)
   // USER END
 
-  switch (pMsg->MsgId) {    case WM_PAINT :    GUI_SetColor(HFM_HEAD_BK);    GUI_FillRect(0,0,480,30);    GUI_FillRect(0,290,480,320);    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);    EDIT_EnableBlink(hItem, 300, 1);    EDIT_SetFont(hItem, GUI_FONT_20_1);    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_1);    EDIT_SetFont(hItem, GUI_FONT_20_1);    EDIT_EnableBlink(hItem, 300, 1);      //hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);    // WM_SetFocus(hItem);    break;
+  switch (pMsg->MsgId) {    case WM_PAINT :         if(WM_Paint_Flag == 1)         {             WM_Paint_Flag = 0;            GUI_SetColor(HFM_HEAD_BK);            GUI_FillRect(0,0,480,30);            GUI_FillRect(0,290,480,320);            hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);            EDIT_EnableBlink(hItem, 300, 1);            EDIT_SetFont(hItem, GUI_FONT_20_1);            hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_1);            EDIT_SetFont(hItem, GUI_FONT_20_1);            EDIT_EnableBlink(hItem, 300, 1);               //显示用户级别            hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_3);            sprintf(userstring,"\xe7\x94\xa8\xe6\x88\xb7\xe7\xba\xa7\xe5\x88\xab:%d",userlevel);
+            TEXT_SetText(hItem, userstring);//         }      //hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);    // WM_SetFocus(hItem);    break;
   case WM_INIT_DIALOG:
     //
     // Initialization of 'Window'

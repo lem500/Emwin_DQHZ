@@ -5,9 +5,9 @@
 
 #include "mygui_init.h"#include "flash.h"static  FILE *fontfile;
 unsigned char WinIndex;//界面索引
-unsigned char WinLastIndex;unsigned char WinKeyValue = 0;unsigned char key_flag = 0;unsigned char userlevel = 0;//用户级别
+unsigned char WinLastIndex;unsigned char WinKeyValue = 0;unsigned char key_flag = 0;volatile unsigned char userlevel = 1;//用户级别unsigned char WM_Paint_Flag = 0;//窗口是否重绘标志位
 WM_HWIN window0;//监控界面
-WM_HWIN menu_window;//主菜单界面WM_HWIN keyboard_window;//小键盘WM_HWIN SysSet_window;//系统设置界面WM_HWIN W4_EventQuery_window;//信息查询界面WM_HWIN W5_TimeSet_window;//时间设置界面WM_HWIN W6_PrintSet_window;//打印设置界面WM_HWIN W7_PasswardSet_window;//密码设置界面WM_HWIN W8_Editdevice_window;//参数设置界面WM_HWIN W9_Communication_window;//通讯设置界面WM_HWIN W10_Reset_window;//系统初始化界面WM_HWIN W11_Update_window;//系统升级界面WM_HWIN W12_LoopLogin_window;//自动登录界面WM_HWIN W13_CrtSet_window;//CRT通信设置界面WM_HWIN W14_NetSet_window;//联网设置WM_HWIN W15_Alarm_window;//报警信息界面WM_HWIN W16_Event_window;//事件信息WM_HWIN W17_Sheild_window;//屏蔽事件WM_HWIN W18_Output_window;//输出事件WM_HWIN W19_Info_window;//系统信息界面WM_HWIN W20_SheildSet_window;//屏蔽界面WM_HWIN W21_OpenSet_window;//开放界面WM_HWIN W22_SelfCheck_window;//自检界面WM_HWIN W23_DeviceInfo_window;//设备信息WM_HWIN W24_AlarmWiM_window;;//报警界面WM_HWIN W25_Faultwindow;//故障界面WM_HWIN W26_Sheildwindow;//屏蔽界面WM_HWIN W_MessageBox;//弹出界面WM_HWIN W_PasswoedMessageBox;//密码输入框WM_HWIN _hwTime[30];//时间文本控件
+WM_HWIN menu_window;//主菜单界面WM_HWIN keyboard_window;//小键盘WM_HWIN SysSet_window;//系统设置界面WM_HWIN W4_EventQuery_window;//信息查询界面WM_HWIN W5_TimeSet_window;//时间设置界面WM_HWIN W6_PrintSet_window;//打印设置界面WM_HWIN W7_PasswardSet_window;//密码设置界面WM_HWIN W8_Editdevice_window;//参数设置界面WM_HWIN W9_Communication_window;//通讯设置界面WM_HWIN W10_Reset_window;//系统初始化界面WM_HWIN W11_Update_window;//系统升级界面WM_HWIN W12_LoopLogin_window;//自动登录界面WM_HWIN W13_CrtSet_window;//CRT通信设置界面WM_HWIN W14_NetSet_window;//联网设置WM_HWIN W15_Alarm_window;//报警信息界面WM_HWIN W16_Event_window;//事件信息WM_HWIN W17_Sheild_window;//屏蔽事件WM_HWIN W18_Output_window;//输出事件WM_HWIN W19_Info_window;//系统信息界面WM_HWIN W20_SheildSet_window;//屏蔽界面WM_HWIN W21_OpenSet_window;//开放界面WM_HWIN W22_SelfCheck_window;//自检界面WM_HWIN W23_DeviceInfo_window;//设备信息WM_HWIN W24_AlarmWiM_window;;//报警界面WM_HWIN W25_Faultwindow;//故障界面WM_HWIN W26_Sheildwindow;//屏蔽界面WM_HWIN W_MessageBox;//弹出界面WM_HWIN W_PasswoedMessageBox;//密码输入框WM_HWIN _hwTime[30];//时间文本控件//M_HWIN _userlevel[30];//用户级别文本控制
 void mygui_init(void)
 {
     WM_SetCreateFlags(WM_CF_MEMDEV);    FRAMEWIN_SetDefaultClientColor(GUI_MAKE_COLOR(0x00808040));//±3?°??é?    FRAMEWIN_SetDefaultBorderSize(0);    FRAMEWIN_SetDefaultBarColor(0,GUI_BLACK);
@@ -81,7 +81,7 @@ WIN_CLASS   WinClass[] ={    //0    {    0,
     0,0,0,0,0,0,0,0,
     W6_PrintSetWindowDisplay,
     W6_PrintSetWindowProcess,
-},//7,密码设置界面{    0,
+},//7,密码设置界面{    3,
     3,
     WIN_TYPE_EDIT,
     0,
@@ -259,7 +259,7 @@ WIN_CLASS   WinClass[] ={    //0    {    0,
 //载入界面
 void WinLoad(unsigned char index)
 {    WM_HWIN active_Win;
-   WinIndex = index;
+   WinIndex = index;   WM_Paint_Flag = 1;
    switch(index)
    {
    case WINDOW0_INDEX:
@@ -288,10 +288,10 @@ void WinKeyProcess(void)
      switch(WinKeyValue)
      {
      case GUI_KEY_ENTER://ok键
-
+          if(WinClass[WinIndex].property == WIN_TYPE_EDIT)          {              if(userlevel < WinClass[WinIndex].UserLevel)              {                if(WinIndex != WINDOW_W27_PASSWORDWIN)                {                   WinPasswordMode = WIN_PASSWORD_OTHER;                   WinLastIndex = WinIndex;                   sprintf(input_userlevel,"%d",WinClass[WinIndex].UserLevel);                   input_userlevelflag = WinClass[WinIndex].UserLevel;                   WinLoad(WINDOW_W27_PASSWORDWIN);                }              }              else                {                }          }
           break;
      case GUI_KEY_HOME://菜单按钮         if(WinIndex !=WINDOW_W27_PASSWORDWIN)         {
-           WinLoad(WINDOW_MENU_INDEX);         }
+           WinLoad(WINDOW_MENU_INDEX);         }         WinKeyValue = 0;
           break;
      case GUI_KEY_LEFT://左键
           break;
@@ -305,13 +305,13 @@ void WinKeyProcess(void)
 			{
 			  break;
 			}
-			WinLoad(winindex);          }
+			WinLoad(winindex);          }          WinKeyValue = 0;
             break;
-	case GUI_USR_KEY_ALARM://火警界面键	    WinLoad(WINDOW_W24_ALARWIM);
+	case GUI_USR_KEY_ALARM://火警界面键	    WinLoad(WINDOW_W24_ALARWIM);        WinKeyValue = 0;
         break;
-	case GUI_USR_KEY_FAULT://故障界面键	    WinLoad(WINDOW_W25_FAULTWIM);
+	case GUI_USR_KEY_FAULT://故障界面键	    WinLoad(WINDOW_W25_FAULTWIM);        WinKeyValue = 0;
         break;
-	case GUI_USR_KEY_SHEILD://屏蔽界面键         WinLoad(WINDOW_W26_SHEILDWIM);
+	case GUI_USR_KEY_SHEILD://屏蔽界面键         WinLoad(WINDOW_W26_SHEILDWIM);         WinKeyValue = 0;
 	    break;
 	case GUI_USR_KEY_OUT://输出界面键
 		break;
@@ -341,13 +341,13 @@ void WinKeyProcess(void)
 			   	{
 			   	  return;
 			   	}
-			   WinLoad(winindex);
+			   WinLoad(winindex);			        WinKeyValue = 0;
 			}
 		break;
 	default :
 			break;
      }
-     key_flag = 0;     WinKeyValue = 0;
+     key_flag = 0;
 }
 //按键处理程序
 void Key_Task(void)

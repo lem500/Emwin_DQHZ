@@ -34,7 +34,7 @@
 #define ID_TEXT_0 (GUI_ID_USER + 0x02)
 #define ID_TEXT_1 (GUI_ID_USER + 0x03)
 #define ID_TEXT_2 (GUI_ID_USER + 0x04)
-
+#define ID_TEXT_3 (GUI_ID_USER + 0x05)
 #define ID_IMAGE_0_IMAGE_0 0x00
 
 // USER START (Optionally insert additional defines)
@@ -101,19 +101,20 @@ static const void * _GetImageById(U32 Id, U32 * pSize) {
 static void _cbDialog(WM_MESSAGE * pMsg) {
   const void * pData;
   WM_HWIN      hItem;
-  U32          FileSize;
+  U32          FileSize;  unsigned char userstring[30];
   // USER START (Optionally insert additional variables)
   // USER END
 
-  switch (pMsg->MsgId) {  case WM_PAINT :    GUI_SetColor(HFM_HEAD_BK);    GUI_FillRect(0,0,480,30);    GUI_FillRect(0,290,480,320);    break;
+  switch (pMsg->MsgId) {  case WM_PAINT :    if(WM_Paint_Flag == 1)    {        WM_Paint_Flag = 0;      GUI_SetColor(HFM_HEAD_BK);      GUI_FillRect(0,0,480,30);      GUI_FillRect(0,290,480,320);               //显示用户级别       hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_3);       sprintf(userstring,"\xe7\x94\xa8\xe6\x88\xb7\xe7\xba\xa7\xe5\x88\xab:%d",userlevel);
+       TEXT_SetText(hItem, userstring);//    }    break;
   case WM_INIT_DIALOG:
     //
     // Initialization of 'Window'
     //
     hItem = pMsg->hWin;
-    WINDOW_SetBkColor(hItem, HFM_COLOR_BK);     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_0);    _hwTime[0] = hItem;      TEXT_SetFont(hItem, GUI_FONT_24_1);
+    WINDOW_SetBkColor(hItem, HFM_COLOR_BK);     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_0);      TEXT_SetFont(hItem, GUI_FONT_24_1);
     TEXT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);
-    TEXT_SetText(hItem, timee);
+    TEXT_SetText(hItem, timee);     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_0);    _hwTime[0] = hItem;
     //
     // Initialization of 'Image'
     //

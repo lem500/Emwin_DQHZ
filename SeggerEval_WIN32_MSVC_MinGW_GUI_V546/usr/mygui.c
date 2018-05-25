@@ -15,7 +15,7 @@ void Dis_time(void)
     int i;   /* GUI_SetBkColor(HFM_HEAD_BK);    GUI_SetColor(GUI_BLACK);    GUI_SetFont(GUI_FONT_20_ASCII);    GUI_DispStringAt(timee,277,293);*/
     for(i = 0;i < 30;i++)
     {
-    if(WM_IsWindow(_hwTime[i])&&WM_IsVisible(_hwTime[i])){            TEXT_SetFont(_hwTime[i], GUI_FONT_24_1);    TEXT_SetTextAlign(_hwTime[i], GUI_TA_LEFT | GUI_TA_VCENTER);
+    if(WM_IsWindow(_hwTime[i])&&WM_IsVisible(_hwTime[i])){            TEXT_SetFont(_hwTime[i], GUI_FONT_24_1);           // GUI_SetColor(GUI_BLACK);           // GUI_SetBkColor(HFM_HEAD_BK);            TEXT_SetBkColor(_hwTime[i],HFM_HEAD_BK);    TEXT_SetTextAlign(_hwTime[i], GUI_TA_LEFT | GUI_TA_VCENTER);
     TEXT_SetText(_hwTime[i], timee);//
    // break;
 

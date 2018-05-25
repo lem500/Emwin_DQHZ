@@ -17,7 +17,7 @@
 *                                                                    *
 **********************************************************************
 */
-
+#define ID_WINDOW_0 (GUI_ID_USER + 0x00)#define ID_TEXT_0 (GUI_ID_USER + 0x01)#define ID_TEXT_1 (GUI_ID_USER + 0x02)#define ID_TEXT_2 (GUI_ID_USER + 0x03)#define ID_TEXT_3 (GUI_ID_USER + 0x04)#define ID_TEXT_4 (GUI_ID_USER + 0x05)#define ID_TEXT_5 (GUI_ID_USER + 0x06)#define ID_TEXT_6 (GUI_ID_USER + 0x07)#define ID_TEXT_7 (GUI_ID_USER + 0x08)
 // USER START (Optionally insert additional includes)
 // USER END
 
@@ -52,7 +52,7 @@
 *       _aDialogCreate
 */
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
-  { WINDOW_CreateIndirect, "menu", ID_WINDOW_1, 0, 0, 480, 325, 0, 0x0, 0 },
+  { WINDOW_CreateIndirect, "menu", ID_WINDOW_0, 0, 0, 480, 325, 0, 0x0, 0 },
   { TEXT_CreateIndirect, zhucaidan, ID_TEXT_0, 6, 1, 91, 26, 0, 0x0, 0 },
   { TEXT_CreateIndirect, xitongshezhi, ID_TEXT_1, 155, 46, 130, 30, 0, 0x64, 0 },
   { TEXT_CreateIndirect, xinxichaxun, ID_TEXT_2, 155, 81, 130, 30, 0, 0x64, 0 },
@@ -80,12 +80,13 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
   WM_HWIN hItem;
-   int     NCode;
-     WM_HWIN hDlg;
+  int     NCode;
+  WM_HWIN hDlg;  unsigned char userstring[30];
   // USER START (Optionally insert additional variables)
   // USER END
 int keyy;
-  switch (pMsg->MsgId) {  case WM_PAINT:    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_6);     _hwTime[1] = hItem;          GUI_SetColor(HFM_HEAD_BK);    GUI_FillRect(0,0,480,30);    GUI_FillRect(0,290,480,320);      	    break;
+  switch (pMsg->MsgId) {  case WM_PAINT:      if(WM_Paint_Flag == 1)      {          WM_Paint_Flag = 0;        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_6);        _hwTime[1] = hItem;          GUI_SetColor(HFM_HEAD_BK);        GUI_FillRect(0,0,480,30);        GUI_FillRect(0,290,480,320);                   //显示用户级别       hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_7);       sprintf(userstring,"\xe7\x94\xa8\xe6\x88\xb7\xe7\xba\xa7\xe5\x88\xab:%d",userlevel);
+       TEXT_SetText(hItem, userstring);//  }      	    break;
   case WM_INIT_DIALOG:
     //
     // Initialization of 'Window'
@@ -94,10 +95,10 @@ int keyy;
     WINDOW_SetBkColor(hItem, HFM_COLOR_BK);
     //
     // Initialization of 'Text'
-    //    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_10);     _hwTime[1] = hItem;
+    //    hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_6);     _hwTime[1] = hItem;
     TEXT_SetFont(hItem, GUI_FONT_24_1);
     TEXT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);
-    TEXT_SetText(hItem, "2018-05-08 14:53:23");
+    TEXT_SetText(hItem, timee);break;
   default:
 
 
@@ -151,7 +152,7 @@ void W2_menuWindowProcess(void)
 		break;
 	case '0':
 		break;
-	case '1':         WinPasswordMode = WIN_PASSWORD_SET;         WinLoad(WINDOW_W27_PASSWORDWIN);	    break;
+	case '1':         WinPasswordMode = WIN_PASSWORD_SET;         WinLastIndex = WINDOW_MENU_INDEX;         WinLoad(WINDOW_W27_PASSWORDWIN);	    break;
 	case '2':
 	case '3':
 	case '4':

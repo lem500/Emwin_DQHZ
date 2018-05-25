@@ -78,21 +78,22 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
 *       _cbDialog
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
-  WM_HWIN hItem;
+  WM_HWIN hItem;  unsigned char userstring[30];
   // USER START (Optionally insert additional variables)
   // USER END
 
-  switch (pMsg->MsgId) {  case WM_PAINT :     GUI_SetColor(HFM_HEAD_BK);     GUI_FillRect(0,0,480,30);     GUI_FillRect(0,290,480,320);     GUI_SetBkColor(HFM_COLOR_BK);    break;
+  switch (pMsg->MsgId) {  case WM_PAINT :    if(WM_Paint_Flag == 1)    {        WM_Paint_Flag = 0;     GUI_SetColor(HFM_HEAD_BK);     GUI_FillRect(0,0,480,30);     GUI_FillRect(0,290,480,320);     GUI_SetBkColor(HFM_COLOR_BK);          //ÏÔÊ¾ÃÜÂë¼¶±ð     hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_1);     sprintf(userstring,"\xe7\x94\xa8\xe6\x88\xb7\xe7\xba\xa7\xe5\x88\xab:%d",userlevel);
+     TEXT_SetText(hItem, userstring);//    }    break;
   case WM_INIT_DIALOG:
     //
     // Initialization of 'Window'
     //
         hItem = pMsg->hWin;
         WINDOW_SetBkColor(hItem, HFM_COLOR_BK);
-    // USER START (Optionally insert additional code for further widget initialization)        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_0);        _hwTime[11] = hItem;
+    // USER START (Optionally insert additional code for further widget initialization)        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_0);        _hwTime[11] = hItem;
        TEXT_SetFont(hItem, GUI_FONT_24_1);
        TEXT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);
-       TEXT_SetText(hItem, timee);
+       TEXT_SetText(hItem, timee);
     //
     // Initialization of 'Progbar'
     //

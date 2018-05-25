@@ -32,10 +32,10 @@
 #define ID_WINDOW_0 (GUI_ID_USER + 0x00)
 #define ID_TEXT_0 (GUI_ID_USER + 0x01)
 #define ID_TEXT_1 (GUI_ID_USER + 0x02)
-#define ID_TEXT_2 (GUI_ID_USER + 0x06)
-#define ID_TEXT_3 (GUI_ID_USER + 0x07)
-#define ID_TEXT_4 (GUI_ID_USER + 0x09)
-#define ID_EDIT_0 (GUI_ID_USER + 0x0A)
+#define ID_TEXT_2 (GUI_ID_USER + 0x03)
+#define ID_TEXT_3 (GUI_ID_USER + 0x04)
+#define ID_TEXT_4 (GUI_ID_USER + 0x05)
+#define ID_EDIT_0 (GUI_ID_USER + 0x06)
 
 
 // USER START (Optionally insert additional defines)
@@ -47,7 +47,7 @@
 *
 **********************************************************************
 */
-unsigned char mimasezi[] = "\xe5\xaf\x86\xe7\xa0\x81\xe8\xae\xbe\xe7\xbd\xae";unsigned char xuanze[] = "\xe6\x8c\x89<F1>\xe9\x94\xae\xe9\x80\x89\xe6\x8b\xa9\xe5\xaf\x86\xe7\xa0\x81\xe7\xba\xa7\xe5\x88\xab\xef\xbc\x9a";unsigned char shurumima[] ="\xe8\xbe\x93\xe5\x85\xa5\xe6\x96\xb0\xe5\xaf\x86\xe7\xa0\x81\xef\xbc\x9a:";
+unsigned char mimasezi[] = "\xe5\xaf\x86\xe7\xa0\x81\xe8\xae\xbe\xe7\xbd\xae";unsigned char xuanze[] = "\xe6\x8c\x89<F1>\xe9\x94\xae\xe9\x80\x89\xe6\x8b\xa9\xe5\xaf\x86\xe7\xa0\x81\xe7\xba\xa7\xe5\x88\xab:";unsigned char shurumima[] ="\xe8\xbe\x93\xe5\x85\xa5\xe6\x96\xb0\xe5\xaf\x86\xe7\xa0\x81\xef\xbc\x9a:";static unsigned char sel_userlevel = 1;static unsigned char pointer = 0;static  unsigned char passwordsetdata[4];unsigned char password_init_flag = 0;static unsigned char flag = 0;
 // USER START (Optionally insert additional static data)
 // USER END
 
@@ -58,7 +58,7 @@ unsigned char mimasezi[] = "\xe5\xaf\x86\xe7\xa0\x81\xe8\xae\xbe\xe7\xbd\xae";u
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
   { WINDOW_CreateIndirect, "Window", ID_WINDOW_0, 0, 0, 480, 320, 0, 0x0, 0 },
   { TEXT_CreateIndirect, mimasezi, ID_TEXT_0, 6, 1, 130, 30, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, xuanze, ID_TEXT_1, 20, 76, 251, 30, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, xuanze, ID_TEXT_1, 20, 76, 290, 30, 0, 0x0, 0 },
   { TEXT_CreateIndirect, yonghujibie, ID_TEXT_2, 6, 293, 130, 30, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "0", ID_TEXT_3, 277, 293, 206, 28, 0, 0x0, 0 },
   { TEXT_CreateIndirect, shurumima, ID_TEXT_4, 140, 111, 140, 30, 0, 0x0, 0 },
@@ -80,15 +80,16 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
 /*********************************************************************
 *
 *       _cbDialog
-*/
+*/
 static void _cbDialog(WM_MESSAGE * pMsg) {
   WM_HWIN hItem;
   int     NCode;
-  int     Id;
+  int     Id; unsigned char userstring[30]; unsigned char xuanzestring[50] = {0,};
   // USER START (Optionally insert additional variables)
   // USER END
 
-  switch (pMsg->MsgId) { case WM_PAINT :    GUI_SetColor(HFM_HEAD_BK);    GUI_FillRect(0,0,480,30);    GUI_FillRect(0,290,480,320);    break;
+  switch (pMsg->MsgId) { case WM_PAINT :   //  if(WM_Paint_Flag == 1)   //  {   //      WM_Paint_Flag = 0;       GUI_SetColor(HFM_HEAD_BK);       GUI_FillRect(0,0,480,30);       GUI_FillRect(0,290,480,320);       sprintf(xuanzestring,"\xe6\x8c\x89<F1>\xe9\x94\xae\xe9\x80\x89\xe6\x8b\xa9\xe5\xaf\x86\xe7\xa0\x81\xe7\xba\xa7\xe5\x88\xab:%d",sel_userlevel);       hItem = WM_GetDialogItem(W7_PasswardSet_window, ID_TEXT_1);       TEXT_SetText(hItem, xuanzestring);       hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);       if(password_init_flag == 1)       {           password_init_flag = 0;          EDIT_SetText(hItem, "****");          flag = 1;          if(sel_userlevel == 1)          {             system_config.Level_1_Password[0] = passwordsetdata[0];             system_config.Level_1_Password[1] = passwordsetdata[1];             system_config.Level_1_Password[2] = passwordsetdata[2];             system_config.Level_1_Password[3] = passwordsetdata[3];          }          else if(sel_userlevel == 2)          {             system_config.Level_2_Password[0] = passwordsetdata[0];             system_config.Level_2_Password[1] = passwordsetdata[1];             system_config.Level_2_Password[2] = passwordsetdata[2];             system_config.Level_2_Password[3] = passwordsetdata[3];          }          else if(sel_userlevel == 3)          {             system_config.Level_3_Password[0] = passwordsetdata[0];             system_config.Level_3_Password[1] = passwordsetdata[1];             system_config.Level_3_Password[2] = passwordsetdata[2];             system_config.Level_3_Password[3] = passwordsetdata[3];          }          Flash_Write_SysSet((unsigned char*)&system_config.Level_1_Password[0]);          Show_Message(WIN_SUCESS_WRITE);       }       else       {          EDIT_SetText(hItem, "");       }       pointer = 0;           //显示用户级别       sprintf(userstring,"\xe7\x94\xa8\xe6\x88\xb7\xe7\xba\xa7\xe5\x88\xab:%d",userlevel);       hItem = WM_GetDialogItem(W7_PasswardSet_window, ID_TEXT_2);
+       TEXT_SetText(hItem, userstring);//    // }    break;
   case WM_INIT_DIALOG:
     //
     // Initialization of 'Window'
@@ -151,11 +152,11 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 
 }
 void W7_PassWordSetWindowProcess(void)
-{
+{      WM_HWIN hItem;    unsigned char xuanzestring[50] = {0,};
      switch(WinKeyValue)
      {
-     case GUI_KEY_ENTER://ok键
-
+     case GUI_KEY_ENTER://ok键          if(sel_userlevel == 1)          {             system_config.Level_1_Password[0] = passwordsetdata[0];             system_config.Level_1_Password[1] = passwordsetdata[1];             system_config.Level_1_Password[2] = passwordsetdata[2];             system_config.Level_1_Password[3] = passwordsetdata[3];          }          else if(sel_userlevel == 2)          {             system_config.Level_2_Password[0] = passwordsetdata[0];             system_config.Level_2_Password[1] = passwordsetdata[1];             system_config.Level_2_Password[2] = passwordsetdata[2];             system_config.Level_2_Password[3] = passwordsetdata[3];          }          else if(sel_userlevel == 3)          {             system_config.Level_3_Password[0] = passwordsetdata[0];             system_config.Level_3_Password[1] = passwordsetdata[1];             system_config.Level_3_Password[2] = passwordsetdata[2];             system_config.Level_3_Password[3] = passwordsetdata[3];          }
+           if(flag == 0 )           {             flag = 1;              Flash_Write_SysSet((unsigned char*)&system_config.Level_1_Password[0]);             Show_Message(WIN_SUCESS_WRITE);           }           else           {             flag = 0;             WM_HideWin(W_MessageBox);             WM_SetFocus(W7_PasswardSet_window);           }
           break;
      case GUI_KEY_HOME://菜单按钮
           break;
@@ -179,12 +180,11 @@ void W7_PassWordSetWindowProcess(void)
 		break;
 	case GUI_USR_KEY_RESET://复位键
 		break;
-	case GUI_KEY_F1://F1功能键
+	case GUI_KEY_F1://F1功能键	    if(sel_userlevel == 3)        {            sel_userlevel = 1;        }        else {           sel_userlevel ++;            }       sprintf(xuanzestring,"\xe6\x8c\x89<F1>\xe9\x94\xae\xe9\x80\x89\xe6\x8b\xa9\xe5\xaf\x86\xe7\xa0\x81\xe7\xba\xa7\xe5\x88\xab:%d",sel_userlevel);       hItem = WM_GetDialogItem(W7_PasswardSet_window, ID_TEXT_1);        TEXT_SetText(hItem, xuanzestring);       WM_Paint_Flag = 1;
 		break;
-	case GUI_KEY_F2://F2功能键
+	case GUI_KEY_F2://F2功能键         GUI_SendKeyMsg(GUI_KEY_BACKSPACE, 1);         pointer--;         passwordsetdata[pointer-1] = 0x30;
 		break;
 	case '0':
-		break;
 	case '1':
 	case '2':
 	case '3':
@@ -193,7 +193,7 @@ void W7_PassWordSetWindowProcess(void)
 	case '6':
 	case '7':
 	case '8':
-	case '9':
+	case '9':	        if(pointer < 4)            {               pointer++;               passwordsetdata[pointer-1] = WinKeyValue;            }        if(pointer == 1)        {            hItem = WM_GetDialogItem(W7_PasswardSet_window, ID_EDIT_0);            EDIT_SetFont(hItem, GUI_FONT_24_ASCII);            EDIT_SetText(hItem, "*");        }        else if(pointer == 2)        {            hItem = WM_GetDialogItem(W7_PasswardSet_window, ID_EDIT_0);            EDIT_SetText(hItem, "**");        }        else if(pointer == 3)        {            hItem = WM_GetDialogItem(W7_PasswardSet_window, ID_EDIT_0);            EDIT_SetText(hItem, "***");        }        else if(pointer == 4)        {            hItem = WM_GetDialogItem(W7_PasswardSet_window, ID_EDIT_0);            EDIT_SetText(hItem, "****");        }
 		break;
 	default :
 			break;
