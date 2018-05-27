@@ -5,6 +5,7 @@
 #include <time.h>
 #include <stdint.h>
 #include <stdio.h>
+#include "../uart/serial.h"
 //#include <windows.h>
 //#include "../usr/stay24.h"
 static unsigned char lastsec = 0;
@@ -32,7 +33,9 @@ void MainTask(void) {    int i;
     u = localtime(&t);
 	 WM_SetCreateFlags(WM_CF_MEMDEV);
 	GUI_Init();    myflash_init();
-	mygui_init();/*********************************************************************************************************************************************/ SIM_HARDKEY_SetCallback(0, _cbKey1); SIM_HARDKEY_SetCallback(1, _cbKey2); SIM_HARDKEY_SetCallback(2, _cbKey3); SIM_HARDKEY_SetCallback(3, _cbKey_Alarm); SIM_HARDKEY_SetCallback(4, _cbKey4);// SIM_HARDKEY_SetCallback(5, _cbKey_SELIENCE); SIM_HARDKEY_SetCallback(6, _cbKey_RESET); //SIM_HARDKEY_SetCallback(7, _cbKey4);// SIM_HARDKEY_SetCallback(8, _cbKey_UP); SIM_HARDKEY_SetCallback(9, _cbKey4); SIM_HARDKEY_SetCallback(10, _cbKey5); SIM_HARDKEY_SetCallback(11, _cbKey6); SIM_HARDKEY_SetCallback(12, _cbKey_Fault);// SIM_HARDKEY_SetCallback(14, _cbKey7); SIM_HARDKEY_SetCallback(15, _cbKey_LEFT); SIM_HARDKEY_SetCallback(16, _cbKey_RIGHT); SIM_HARDKEY_SetCallback(19, _cbKey_Home); SIM_HARDKEY_SetCallback(24, _cbKey7); SIM_HARDKEY_SetCallback(25, _cbKey8); SIM_HARDKEY_SetCallback(26, _cbKey9); SIM_HARDKEY_SetCallback(27, _cbKey_Sheild); SIM_HARDKEY_SetCallback(28, _cbKey_DOWN); SIM_HARDKEY_SetCallback(30, _cbKey_F1); SIM_HARDKEY_SetCallback(32, _cbKey_F2); SIM_HARDKEY_SetCallback(34, _cbKey_ESCAPE); SIM_HARDKEY_SetCallback(35, _cbKey0); SIM_HARDKEY_SetCallback(36, _cbKey_ENTER); SIM_HARDKEY_SetCallback(37, _cbKey_Out);
+	mygui_init();
+	serial_init();
+	serial_rec();/*********************************************************************************************************************************************/ SIM_HARDKEY_SetCallback(0, _cbKey1); SIM_HARDKEY_SetCallback(1, _cbKey2); SIM_HARDKEY_SetCallback(2, _cbKey3); SIM_HARDKEY_SetCallback(3, _cbKey_Alarm); SIM_HARDKEY_SetCallback(4, _cbKey4);// SIM_HARDKEY_SetCallback(5, _cbKey_SELIENCE); SIM_HARDKEY_SetCallback(6, _cbKey_RESET); //SIM_HARDKEY_SetCallback(7, _cbKey4);// SIM_HARDKEY_SetCallback(8, _cbKey_UP); SIM_HARDKEY_SetCallback(9, _cbKey4); SIM_HARDKEY_SetCallback(10, _cbKey5); SIM_HARDKEY_SetCallback(11, _cbKey6); SIM_HARDKEY_SetCallback(12, _cbKey_Fault);// SIM_HARDKEY_SetCallback(14, _cbKey7); SIM_HARDKEY_SetCallback(15, _cbKey_LEFT); SIM_HARDKEY_SetCallback(16, _cbKey_RIGHT); SIM_HARDKEY_SetCallback(19, _cbKey_Home); SIM_HARDKEY_SetCallback(24, _cbKey7); SIM_HARDKEY_SetCallback(25, _cbKey8); SIM_HARDKEY_SetCallback(26, _cbKey9); SIM_HARDKEY_SetCallback(27, _cbKey_Sheild); SIM_HARDKEY_SetCallback(28, _cbKey_DOWN); SIM_HARDKEY_SetCallback(30, _cbKey_F1); SIM_HARDKEY_SetCallback(32, _cbKey_F2); SIM_HARDKEY_SetCallback(34, _cbKey_ESCAPE); SIM_HARDKEY_SetCallback(35, _cbKey0); SIM_HARDKEY_SetCallback(36, _cbKey_ENTER); SIM_HARDKEY_SetCallback(37, _cbKey_Out);
 	//WinIndex = 0;
 
 
@@ -48,6 +51,7 @@ void MainTask(void) {    int i;
           lastsec = u->tm_sec;
          sprintf(timee,"%d-%02d-%02d %02d:%02d:%02d",1900+u->tm_year,1+u->tm_mon,u->tm_mday,u->tm_hour,u->tm_min,u->tm_sec);
           Dis_time();
+          serail_send(timee,20);
 
 		}
 		        Key_Task();
