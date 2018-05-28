@@ -1,11 +1,10 @@
-#include "serial.h"
-
-HANDLE hCom;
+#include "serial.h"unsigned char serial_revbuff[2048];unsigned int Serial_RevPointer = 0;
+//线程创建
+HANDLE hCom;    // 线程创建HANDLE Serial_HRead,Serial_HWrite;DWORD WINAPI Thread_SerialWrite(LPVOID lpParameter){    char outputData[100]={0x00};//输出数据缓存    if( hCom==INVALID_HANDLE_VALUE )    {       // puts("打开串口失败");        return 0;    }    DWORD strLength = 0;    while(1)    {        for(int i=0;i<100;i++)        {            outputData[i]=0;        }        strLength = strlen(outputData);        WriteFile(  hCom,outputData,strLength,&strLength,NULL); // 串口发送字符串        PurgeComm(hCom,PURGE_TXCLEAR|PURGE_RXCLEAR);            //清空缓冲区        Sleep(100);    }    return 0;}void Rev_Task(void) //串口数据处理函数{    if(Serial_RevPointer !=0)    {        if(Serial_RevPointer >= (serial_revbuff[1] + serial_revbuff[2]*256))        {        }    }}DWORD WINAPI Thread_SerialRead(LPVOID lpParameter){    DWORD dwErrors;//错误信息    COMSTAT Rcs;//COMSTAT结构体通信设备的当前信息    int Len = 0;    DWORD length;//用来接收读取的字节数    DWORD  lpEvtMask;    if(hCom == INVALID_HANDLE_VALUE)    {        return 0;    }    memset(serial_revbuff,0,sizeof(serial_revbuff));    while(1)    {        OVERLAPPED osWait;        memset(&osWait,0,sizeof(OVERLAPPED));        osWait.hEvent=CreateEvent(NULL,TRUE,FALSE,NULL);        DWORD dwEvtMask;        if(WaitCommEvent(hCom,&dwEvtMask,&osWait))        {            if(dwEvtMask & EV_RXCHAR)            {                DWORD dwError;                COMSTAT cs;                if (!ClearCommError(hCom, &dwError, &cs))                {                    //AfxMessageBox(_T("ClearCommError() failed"));                    CloseHandle(hCom);                    return 0;                }                char buf[101] = {0};                DWORD nLenOut = 0;                DWORD dwTrans;                OVERLAPPED osRead;                memset(&osRead,0,sizeof(OVERLAPPED));                osRead.hEvent=CreateEvent(NULL,TRUE,FALSE,NULL);                BOOL bReadStatus = ReadFile(hCom, buf, cs.cbInQue, &nLenOut,&osRead);                memcpy(serial_revbuff,buf,nLenOut);                if(Serial_RevPointer < MAX_SERAIL_LENGHT)                {                   Serial_RevPointer += nLenOut;                }                else                {                   Serial_RevPointer = 0;                }                 Rev_Task();                if(!bReadStatus)                {                   if(GetLastError()==ERROR_IO_PENDING)//重叠操作正在进行                   {                   }                }                else{ //操作已完成                }            }        }        else{                if(GetLastError()==ERROR_IO_PENDING)                {                    WaitForSingleObject(osWait.hEvent, INFINITE);                    if(dwEvtMask&EV_RXCHAR)                    {                        DWORD dwError;                        COMSTAT cs;                        if(!ClearCommError(hCom, &dwError, &cs))                        {                            CloseHandle(hCom);                            return 0;                        }                        char buf[101] = {0};                        DWORD nLenOut = 0;                        DWORD dwTrans;                        OVERLAPPED osRead;                        memset(&osRead,0,sizeof(OVERLAPPED));                        osRead.hEvent=CreateEvent(NULL,TRUE,FALSE,NULL);                        BOOL bReadStatus = ReadFile(hCom, buf, cs.cbInQue, &nLenOut,&osRead);                        memcpy(serial_revbuff,buf,nLenOut);                       if(Serial_RevPointer < MAX_SERAIL_LENGHT)                        {                           Serial_RevPointer += nLenOut;                        }                        else                        {                            Serial_RevPointer = 0;                        }                         Rev_Task();                        if(!bReadStatus)                        {                           if(GetLastError()==ERROR_IO_PENDING)//重叠操作正在进行                           {                           }                        }                        else                        {                        }                    }                }        }    }       // Sleep(100);    return 0;}
 //串口初始化
-cWinThread*m_pThread;
 void serial_init(void)
-{
-hCom=CreateFile("COM1",//COM1口
+{
+    hCom=CreateFile("COM1",//COM1口
 		GENERIC_READ|GENERIC_WRITE, //允许读和写
 		0, //独占方式
 		NULL,
@@ -22,9 +21,9 @@ hCom=CreateFile("COM1",//COM1口
 
 	COMMTIMEOUTS TimeOuts;
 	//设定读超时
-	TimeOuts.ReadIntervalTimeout = MAXDWORD;
-	TimeOuts.ReadTotalTimeoutMultiplier = 0;
-	TimeOuts.ReadTotalTimeoutConstant = 0;
+	TimeOuts.ReadIntervalTimeout = 1000;
+	TimeOuts.ReadTotalTimeoutMultiplier = 500;
+	TimeOuts.ReadTotalTimeoutConstant = 5000;
 	//在读一次输入缓冲区的内容后读操作就立即返回，
 	//而不管是否读入了要求的字符。
 
@@ -42,7 +41,7 @@ hCom=CreateFile("COM1",//COM1口
 	dcb.StopBits = TWOSTOPBITS; //两个停止位
 	SetCommState(hCom, &dcb);
 
-	PurgeComm(hCom, PURGE_TXCLEAR|PURGE_RXCLEAR);
+	PurgeComm(hCom, PURGE_TXCLEAR|PURGE_RXCLEAR);	SetCommMask(hCom,EV_RXCHAR);    Serial_HWrite = CreateThread(NULL,0,Thread_SerialWrite,NULL,0,NULL);    Serial_HRead  = CreateThread(NULL,0,Thread_SerialRead,NULL,0,NULL);
 }
 void serail_send(unsigned char *data,unsigned char len)
 {
@@ -84,7 +83,7 @@ void serial_rec(void)
 		if(GetLastError()==ERROR_IO_PENDING)
 	        //GetLastError()函数返回ERROR_IO_PENDING,表明串口正在进行读操作
 		{
-		    GetOverlappedResult
+		    //GetOverlappedResult
 			WaitForSingleObject(m_osRead.hEvent, 2000);
 		    //使用WaitForSingleObject函数等待，直到读操作完成或延时已达到2秒钟
 		    //当串口读操作进行完毕后，m_osRead的hEvent事件会变为有信号

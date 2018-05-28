@@ -65,7 +65,7 @@ void MainTask(void) {    int i;
       //printf ("北京时间:%d.%d.%d ", (1900+u->tm_year), (1+u->tm_mon), u->tm_mday);
      // printf("%d:%d:%d\n", u->tm_hour, u->tm_min, u->tm_sec);
 
-
-
+#if CODEBLACK_FLAG
+      CloseHandle(Serial_HRead);      CloseHandle(Serial_HWrite);#endif // CODEBLACK_FLAG
 
     }    #endif // 0

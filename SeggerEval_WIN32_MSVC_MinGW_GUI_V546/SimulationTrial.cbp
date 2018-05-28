@@ -76,6 +76,14 @@
 		<Unit filename="Config/SIMConf.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="Event/Event.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Event/Event.h" />
+		<Unit filename="Event/Shield.h" />
+		<Unit filename="Event/ShieldTask.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="GUI/Include/BUTTON.h" />
 		<Unit filename="GUI/Include/BUTTON_Private.h" />
 		<Unit filename="GUI/Include/CHECKBOX.h" />
