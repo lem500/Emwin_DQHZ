@@ -45,10 +45,10 @@
 *
 **********************************************************************
 */
-unsigned char zidongdengluu[] = "\xe8\x87\xaa\xe5\x8a\xa8\xe7\x99\xbb\xe5\xbd\x95";
+
 // USER START (Optionally insert additional static data)
 // USER END
-
+#if CODEBLACK_FLAGunsigned char zidongdengluu[] = "\xe8\x87\xaa\xe5\x8a\xa8\xe7\x99\xbb\xe5\xbd\x95";#elseconst unsigned char zidongdengluu[] = "×Ô¶¯µÇÂ¼";#endif // CODEBLACK_FLAG
 /*********************************************************************
 *
 *       _aDialogCreate

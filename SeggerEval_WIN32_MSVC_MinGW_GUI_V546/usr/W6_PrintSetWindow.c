@@ -22,7 +22,7 @@
 // USER END
 
 #include "DIALOG.h"#include "mygui_init.h"#include "flash.h"
-
+extern SYSTEM_CONFIG system_config;
 /*********************************************************************
 *
 *       Defines

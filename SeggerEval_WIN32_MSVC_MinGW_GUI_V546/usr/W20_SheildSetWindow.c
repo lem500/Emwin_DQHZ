@@ -43,8 +43,8 @@
 *       Static data
 *
 **********************************************************************
-*/
-unsigned char ppingbii[] = "\xe5\xb1\x8f\xe8\x94\xbd";unsigned char dizz[] = "\xe5\x9c\xb0\xe5\x9d\x80:";
+*/#if CODEBLACK_FLAGunsigned char ppingbii[] = "\xe5\xb1\x8f\xe8\x94\xbd";unsigned char dizz[] = "\xe5\x9c\xb0\xe5\x9d\x80:";#elseconst unsigned char ppingbii[] = "∆¡±Œ";const unsigned char dizz[] = "µÿ÷∑:";#endif // CODEBLACK_FLAG
+
 // USER START (Optionally insert additional static data)
 // USER END
 

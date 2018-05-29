@@ -43,8 +43,8 @@
 *       Static data
 *
 **********************************************************************
-*/
-unsigned char kaifangg[] = "\xe5\xbc\x80\xe6\x94\xbe";extern unsigned char dizz[];
+*/#if CODEBLACK_FLAGunsigned char kaifangg[] = "\xe5\xbc\x80\xe6\x94\xbe";extern unsigned char dizz[];#elseconst unsigned char kaifangg[] = "¿ª·Å";extern const unsigned char dizz[];#endif // CODEBLACK_FLAG
+
 // USER START (Optionally insert additional static data)
 // USER END
 

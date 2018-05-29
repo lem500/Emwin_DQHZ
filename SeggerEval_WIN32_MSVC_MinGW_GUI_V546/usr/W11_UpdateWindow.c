@@ -42,8 +42,8 @@
 *       Static data
 *
 **********************************************************************
-*/extern unsigned char banben[];
-unsigned char xitongshengji_[] = "\xe7\xb3\xbb\xe7\xbb\x9f\xe5\x8d\x87\xe7\xba\xa7";unsigned char banben1[] = "\xe8\xa6\x81\xe5\x8d\x87\xe7\xba\xa7\xe7\xa8\x8b\xe5\xba\x8f\xe7\x89\x88\xe6\x9c\xac:";
+*/extern unsigned char banben[];#if CODEBLACK_FLAGunsigned char xitongshengji_[] = "\xe7\xb3\xbb\xe7\xbb\x9f\xe5\x8d\x87\xe7\xba\xa7";unsigned char banben1[] = "\xe8\xa6\x81\xe5\x8d\x87\xe7\xba\xa7\xe7\xa8\x8b\xe5\xba\x8f\xe7\x89\x88\xe6\x9c\xac:";#elseconst unsigned char xitongshengji_[] = "系统升级"const unsigned char banben1[] = "要升级程序版本:";#endif // CODEBLACK_FLAG
+
 // USER START (Optionally insert additional static data)
 // USER END
 

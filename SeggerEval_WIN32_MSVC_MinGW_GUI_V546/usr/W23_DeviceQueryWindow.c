@@ -43,11 +43,9 @@
 *       Static data
 *
 **********************************************************************
-*/
-unsigned char shebeichaxun[] = "\xe8\xae\xbe\xe5\xa4\x87\xe4\xbf\xa1\xe6\x81\xaf";
-// USER START (Optionally insert additional static data)
-// USER END
-unsigned char  dizzz[] = "\xe5\x9c\xb0\xe5\x9d\x80";unsigned char zaixxx[] ="\xe5\x9c\xa8\xe7\xba\xbf";unsigned char leixingg[] = "\xe7\xb1\xbb\xe5\x9e\x8b";unsigned char fazz[] = "\xe9\x98\x80\xe5\x80\xbc";unsigned char shishi[] ="\xe5\xae\x9e\xe6\x97\xb6";unsigned char weizhii[] = "\xe4\xbd\x8d\xe7\xbd\xae";unsigned char zaixianzongshu [] = "\xe5\x9c\xa8\xe7\xba\xbf\xe6\x80\xbb\xe6\x95\xb0:";//unsigned char
+*/#if CODEBLACK_FLAGunsigned char shebeichaxun[] = "\xe8\xae\xbe\xe5\xa4\x87\xe4\xbf\xa1\xe6\x81\xaf";
+unsigned char  dizzz[] = "\xe5\x9c\xb0\xe5\x9d\x80";unsigned char zaixxx[] ="\xe5\x9c\xa8\xe7\xba\xbf";unsigned char leixingg[] = "\xe7\xb1\xbb\xe5\x9e\x8b";unsigned char fazz[] = "\xe9\x98\x80\xe5\x80\xbc";unsigned char shishi[] ="\xe5\xae\x9e\xe6\x97\xb6";unsigned char weizhii[] = "\xe4\xbd\x8d\xe7\xbd\xae";unsigned char zaixianzongshu [] = "\xe5\x9c\xa8\xe7\xba\xbf\xe6\x80\xbb\xe6\x95\xb0:";#elseconst unsigned char shebeichaxun[] ="设备信息";unsigned char  dizzz[] = "地址";unsigned char zaixxx[] = "在线";unsigned char leixingg[] = "类型";unsigned char fazz[] = "阀值";unsigned char shishi[] = "实时";unsigned char weizhii[] = "位置";unsigned char zaixianzongshu [] = "在线总数:";#endif // CODEBLACK_FLAG
+//unsigned char
 /*********************************************************************
 *
 *       _aDialogCreate

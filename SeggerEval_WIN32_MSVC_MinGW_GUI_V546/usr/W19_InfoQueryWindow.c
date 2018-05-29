@@ -43,11 +43,11 @@
 *       Static data
 *
 **********************************************************************
-*/
-unsigned char xitongxixii[] = "\xe7\xb3\xbb\xe7\xbb\x9f\xe4\xbf\xa1\xe6\x81\xaf";
+*/#if CODEBLACK_FLAGunsigned char xitongxixii[] = "\xe7\xb3\xbb\xe7\xbb\x9f\xe4\xbf\xa1\xe6\x81\xaf";
 // USER START (Optionally insert additional static data)
 // USER END
-unsigned char banben[] = "\xe8\xae\xbe\xe5\xa4\x87\xe7\xa8\x8b\xe5\xba\x8f\xe7\x89\x88\xe6\x9c\xac  :V1.0";
+unsigned char banben[] = "\xe8\xae\xbe\xe5\xa4\x87\xe7\xa8\x8b\xe5\xba\x8f\xe7\x89\x88\xe6\x9c\xac  :V1.0";#elseconst unsigned char xitongxixii[] = "系统信息";const unsigned char banben[] = "设备程序版本:V1.0";#endif // CODEBLACK_FLAG
+
 /*********************************************************************
 *
 *       _aDialogCreate

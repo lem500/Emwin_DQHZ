@@ -43,8 +43,8 @@
 *       Static data
 *
 **********************************************************************
-*/
-unsigned char shuchuxixx[] = "\xe8\xbe\x93\xe5\x87\xba\xe4\xbf\xa1\xe6\x81\xaf";
+*/#if CODEBLACK_FLAGunsigned char shuchuxixx[] = "\xe8\xbe\x93\xe5\x87\xba\xe4\xbf\xa1\xe6\x81\xaf";#elseconst unsigned char shuchuxixx[] = " ‰≥ˆ–≈œ¢";#endif // CODEBLACK_FLAG
+
 // USER START (Optionally insert additional static data)
 // USER END
 

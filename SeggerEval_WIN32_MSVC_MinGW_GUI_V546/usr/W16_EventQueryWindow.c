@@ -42,8 +42,8 @@
 *       Static data
 *
 **********************************************************************
-*/
-unsigned char shijianxixx[] = "\xe4\xba\x8b\xe4\xbb\xb6\xe4\xbf\xa1\xe6\x81\xaf";unsigned char shijianzongshu[] = "\xe4\xba\x8b\xe4\xbb\xb6\xe6\x80\xbb\xe6\x95\xb0:";
+*/#if CODEBLACK_FLAGunsigned char shijianxixx[] = "\xe4\xba\x8b\xe4\xbb\xb6\xe4\xbf\xa1\xe6\x81\xaf";unsigned char shijianzongshu[] = "\xe4\xba\x8b\xe4\xbb\xb6\xe6\x80\xbb\xe6\x95\xb0:";#elseconst unsigned char shijianxixx[] = "事件信息";const unsigned char shijianzongshu[] = "事件总数:";#endif // CODEBLACK_FLAG
+
 // USER START (Optionally insert additional static data)
 // USER END
 

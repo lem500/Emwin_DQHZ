@@ -233,6 +233,9 @@
 		<Unit filename="usr/W26_SheildWindow.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="usr/W28_InPutWindow.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="usr/W2_menuWindow.c">
 			<Option compilerVar="CC" />
 		</Unit>

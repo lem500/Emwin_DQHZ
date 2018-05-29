@@ -43,11 +43,9 @@
 *       Static data
 *
 **********************************************************************
-*/
-unsigned char baojingxinxii[] = "\xe6\x8a\xa5\xe8\xad\xa6\xe4\xbf\xa1\xe6\x81\xaf";
-// USER START (Optionally insert additional static data)
-// USER END
-extern unsigned char dizzz[];extern unsigned char zaixxx[];extern unsigned char leixingg[];extern unsigned char weizhii[];unsigned char baojingzhi[] = "\xe6\x8a\xa5\xe8\xad\xa6\xe5\x80\xbc";unsigned char xuhao[] = "\xe5\xba\x8f\xe5\x8f\xb7";unsigned char baojingzongshu[] = "\xe6\x8a\xa5\xe8\xad\xa6\xe6\x80\xbb\xe6\x95\xb0:";
+*/#if CODEBLACK_FLAGunsigned char baojingxinxii[] = "\xe6\x8a\xa5\xe8\xad\xa6\xe4\xbf\xa1\xe6\x81\xaf";
+extern unsigned char dizzz[];extern unsigned char zaixxx[];extern unsigned char leixingg[];extern unsigned char weizhii[];unsigned char baojingzhi[] = "\xe6\x8a\xa5\xe8\xad\xa6\xe5\x80\xbc";unsigned char xuhao[] = "\xe5\xba\x8f\xe5\x8f\xb7";unsigned char baojingzongshu[] = "\xe6\x8a\xa5\xe8\xad\xa6\xe6\x80\xbb\xe6\x95\xb0:";#elseconst unsigned char baojingxinxii[] ="报警信息";extern const unsigned char dizzz[];extern const unsigned char zaixxx[];extern const unsigned char leixingg[];extern const unsigned char weizhii[];unsigned char baojingzhi[] = "报警值";unsigned char xuhao[] = "序号";unsigned char baojingzongshu[] = "报警总数";#endif // CODEBLACK_FLAG
+
 /*********************************************************************
 *
 *       _aDialogCreate

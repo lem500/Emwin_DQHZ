@@ -47,7 +47,7 @@
 unsigned char canshushezhi_[] = "\xe5\x8f\x82\xe6\x95\xb0\xe8\xae\xbe\xe7\xbd\xae";extern dizz[];unsigned char zaixian[] = "\xe5\x9c\xa8\xe7\xba\xbf: ";unsigned char leixing[] = "\xe7\xb1\xbb\xe5\x9e\x8b:";unsigned char fazhi[] = "\xe9\x98\x80\xe5\x80\xbc:";unsigned char weizhi[] ="\xe4\xbd\x8d\xe7\xbd\xae:";
 // USER START (Optionally insert additional static data)
 // USER END
-
+static unsigned char Cursor_Edit = 0;
 /*********************************************************************
 *
 *       _aDialogCreate
@@ -91,7 +91,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     // USER START (Optionally insert additional code for further widget initialization)        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_0);        _hwTime[7] = hItem;
        TEXT_SetFont(hItem, GUI_FONT_24_1);
        TEXT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);
-       TEXT_SetText(hItem, timee);           hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);    EDIT_SetText(hItem, "");    EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);    EDIT_SetFont(hItem, GUI_FONT_20_ASCII);    //    // Initialization of 'Edit'    //    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);    EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);    EDIT_SetFont(hItem, GUI_FONT_20_ASCII);    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_1);    EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);    EDIT_SetFont(hItem, GUI_FONT_20_ASCII);    //    // Initialization of 'Edit'    //    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_2);    EDIT_SetText(hItem, "");    EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);    EDIT_SetFont(hItem, GUI_FONT_20_ASCII);    //    // Initialization of 'Edit'    //    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_3);    EDIT_SetText(hItem, "");    EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);     EDIT_SetFont(hItem, GUI_FONT_20_ASCII);    //    // Initialization of 'Edit'    //    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_4);    EDIT_SetText(hItem, "");    EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);     EDIT_SetFont(hItem, GUI_FONT_20_ASCII);    //    // Initialization of 'Edit'    //    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_5);    EDIT_SetText(hItem, "");    EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetTextAlign(hItem, GUI_TA_HCENTER | GUI_TA_VCENTER);    EDIT_SetFont(hItem, GUI_FONT_24_ASCII);
+       TEXT_SetText(hItem, timee);           hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);    EDIT_SetText(hItem, "");    EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);    EDIT_SetFont(hItem, GUI_FONT_20_ASCII);    //    // Initialization of 'Edit'    //    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_0);    EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);    EDIT_SetFont(hItem, GUI_FONT_20_ASCII);    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_1);    EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);    EDIT_SetFont(hItem, GUI_FONT_20_ASCII);    //    // Initialization of 'Edit'    //    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_2);    EDIT_SetText(hItem, "");    EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);    EDIT_SetFont(hItem, GUI_FONT_20_ASCII);    //    // Initialization of 'Edit'    //    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_3);    EDIT_SetText(hItem, "");    EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);     EDIT_SetFont(hItem, GUI_FONT_20_ASCII);    //    // Initialization of 'Edit'    //    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_4);    EDIT_SetText(hItem, "");    EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);     EDIT_SetFont(hItem, GUI_FONT_20_ASCII);    //    // Initialization of 'Edit'    //    hItem = WM_GetDialogItem(pMsg->hWin, ID_EDIT_5);    EDIT_SetText(hItem, "");    EDIT_EnableBlink(hItem, 300, 1);     EDIT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);    EDIT_SetFont(hItem, GUI_FONT_24_ASCII);
     // USER START (Optionally insert additional code for further widget initialization)
     // USER END
     break;
@@ -124,10 +124,9 @@ void W8_EditdeviceWindowProcess(void)
      case GUI_KEY_LEFT://左键
           break;
 	 case GUI_KEY_UP://下键
+	 case GUI_KEY_DOWN://下键         GUI_SendKeyMsg(GUI_KEY_TAB, 1);          if(Cursor_Edit < 5)          {              Cursor_Edit++;          }          else{            Cursor_Edit = 0;          }
           break;
-	 case GUI_KEY_DOWN://下键
-          break;
-	 case GUI_KEY_ESCAPE://取消键
+	 case GUI_KEY_ESCAPE://取消键          Cursor_Edit = 0;
             break;
 	case GUI_USR_KEY_ALARM://火警界面键
         break;
@@ -141,9 +140,9 @@ void W8_EditdeviceWindowProcess(void)
 		break;
 	case GUI_USR_KEY_RESET://复位键
 		break;
-	case GUI_KEY_F1://F1功能键
+	case GUI_KEY_F1://F1功能键         if(Cursor_Edit == 5)         {          WinLastIndex = WINDOW_W28_INPUT_TEXT;          WinLoad(WINDOW_W28_INPUT_TEXT);         }
 		break;
-	case GUI_KEY_F2://F2功能键
+	case GUI_KEY_F2://F2功能键         GUI_SendKeyMsg(GUI_KEY_BACKSPACE, 1);
 		break;
 	case '0':
 		break;

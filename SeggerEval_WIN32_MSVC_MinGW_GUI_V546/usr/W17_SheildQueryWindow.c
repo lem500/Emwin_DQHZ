@@ -43,8 +43,8 @@
 *       Static data
 *
 **********************************************************************
-*/
-unsigned char pingbixixx[] = "\xe5\xb1\x8f\xe8\x94\xbd\xe4\xbf\xa1\xe6\x81\xaf";
+*/#if CODEBLACK_FLAGunsigned char pingbixixx[] = "\xe5\xb1\x8f\xe8\x94\xbd\xe4\xbf\xa1\xe6\x81\xaf";#elseconst unsigned char pingbixixx[] ="∆¡±Œ–≈œ¢";#endif // CODEBLACK_FLAG
+
 // USER START (Optionally insert additional static data)
 // USER END
 

@@ -43,8 +43,8 @@
 *       Static data
 *
 **********************************************************************
-*/
-unsigned char lianwangsezi[] = "\xe8\x81\x94\xe7\xbd\x91\xe8\xae\xbe\xe7\xbd\xae";
+*/#if CODEBLACK_FLAGunsigned char lianwangsezi[] = "\xe8\x81\x94\xe7\xbd\x91\xe8\xae\xbe\xe7\xbd\xae";#elseconst unsigned char lianwangsezi[] = "¡™Õ¯…Ë÷√";#endif // CODEBLACK_FLAG
+
 // USER START (Optionally insert additional static data)
 // USER END
 

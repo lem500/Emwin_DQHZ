@@ -43,8 +43,8 @@
 *       Static data
 *
 **********************************************************************
-*/
-unsigned char zijiann[] = "\xe8\x87\xaa\xe6\xa3\x80";
+*/#if CODEBLACK_FLAG unsigned char zijiann[] = "\xe8\x87\xaa\xe6\xa3\x80";#else const unsigned char zijiann[] = "вт╪Л";#endif // CODEBLACK_FLAG
+
 // USER START (Optionally insert additional static data)
 // USER END
 
