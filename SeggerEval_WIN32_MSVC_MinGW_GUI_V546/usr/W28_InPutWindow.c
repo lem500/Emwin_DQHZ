@@ -22,16 +22,16 @@
 // USER END
 
 #include "DIALOG.h"
-#include "mygui_init.h"
+#include "mygui_init.h"#include "../input/pymb.h"
 /*********************************************************************
 *
 *       Defines
 *
 **********************************************************************
 */
-#define ID_FRAMEWIN_0 (GUI_ID_USER + 0x00)
-#define ID_EDIT_0 (GUI_ID_USER + 0x01)
-
+#define  ID_FRAMEWIN_0 (GUI_ID_USER + 0x00)
+#define  ID_EDIT_0 (GUI_ID_USER + 0x01)
+#define  ID_TEXT_1 (GUI_ID_USER + 0x02)
 
 // USER START (Optionally insert additional defines)
 // USER END#if CODEBLACK_FLAGconst unsigned char T9_input_info[] ="T9\xe8\xbe\x93\xe5\x85\xa5\xe6\xb3\x95";#elseconst unsigned char T9_input_info[] = "T9输入法";#endif // CODEBLACK_FLAG
@@ -42,7 +42,7 @@
 *
 **********************************************************************
 */
-
+#define x 245#define y 185static char inputstring[40];static char input_flag = 0; //输入法状态static char input_py_select = 0; //拼音位置static char input_mb_select = 0;//码表位置static char input_page = 0;//输入法页码static char input_count = 0; //输入汉字的数量static char input_char = 0;static unsigned char py_match = 0;//输入的字母与拼音匹配的个数static char py_switch = 0;//输入法切换; 0: 汉字输入法 1：数字输入法unsigned char inputlen = 40; //输入法最大输入的长度static unsigned char Zone = 0;//汉字区static unsigned char Bit  = 0;//汉字位/***********************************************函数功能：返回输入法最大输入字符长度函数名称：unsigned char GetInputLen(void)***********************************************/unsigned char GetInputLen(void) {	 return inputlen; }/********************************************** 函数功能：设置输入法最大输入长度 函数名称：void SetInputLen(unsigned char len) **********************************************/ void SetInputLen(unsigned char len) {	 inputlen = len; }//拼音输入法pyinput t9={	get_pymb,    0,};//字母输入zminput t9_z ={	get_zimu,	0,};//比较两个字符串的匹配情况//返回值:0xff,表示完全匹配.//		 其他,匹配的字符数char str_match(char*str1,char*str2){	unsigned char i=0;	while(1)	{		if(*str1!=*str2)break;		  //部分匹配		if(*str1=='\0'){i=0XFF;break;}//完全匹配		i++;		str1++;		str2++;	}	return i;//两个字符串相等}//获取匹配的拼音码表//*strin,输入的字符串,形如:"726"//**matchlist,输出的匹配表.//返回值:[7],0,表示完全匹配；1，表示部分匹配（仅在没有完全匹配的时候才会出现）//		 [6:0],完全匹配的时候，表示完全匹配的拼音个数//			   部分匹配的时候，表示有效匹配的位数char get_matched_pymb(char *strin,py_index **matchlist){	py_index *bestmatch;//最佳匹配	U16 pyindex_len;	U16 i;	unsigned char temp,mcnt=0,bmcnt=0;	bestmatch=(py_index*)&py_index3[0];//默认为a的匹配	pyindex_len=sizeof(py_index3)/sizeof(py_index3[0]);//得到py索引表的大小.	for(i=0;i<pyindex_len;i++)	{		temp=str_match(strin,(char*)py_index3[i].py_input);		if(temp)		{			if(temp==0XFF)				matchlist[mcnt++]=(py_index*)&py_index3[i];			else if(temp>bmcnt)//找最佳匹配			{				bmcnt=temp;			    bestmatch=(py_index*)&py_index3[i];//最好的匹配.			}		}	}	if(mcnt==0&&bmcnt)//没有完全匹配的结果,但是有部分匹配的结果	{		matchlist[0]=bestmatch;		mcnt=bmcnt|0X80;		//返回部分匹配的有效位数	}	return mcnt;//返回匹配的个数}//获取匹配的字母表char get_matched_zimub(char *str,py_index **matchlist){	py_index *bestmatch;//最佳匹配	U16 pyindex_len;	U16 i;    unsigned char temp,mcnt=0,bmcnt=0;	bestmatch=(py_index*)&zimu_index4[0];//默认为a的匹配	pyindex_len=sizeof(zimu_index4)/sizeof(zimu_index4[0]);//得到py索引表的大小.	for(i=0;i<pyindex_len;i++)	{		temp=str_match(str,(char*)zimu_index4[i].py_input);		if(temp)		{			if(temp==0XFF)				matchlist[mcnt++]=(py_index*)&zimu_index4[i];			else if(temp>bmcnt)//找最佳匹配			{				bmcnt=temp;			    bestmatch=(py_index*)&zimu_index4[i];//最好的匹配.			}		}	}	if(mcnt==0&&bmcnt)//没有完全匹配的结果,但是有部分匹配的结果	{		matchlist[0]=bestmatch;		mcnt=bmcnt|0X80;		//返回部分匹配的有效位数	}	return mcnt;//返回匹配的个数}//得到拼音码表.//str:输入字符串//返回值:匹配个数.char get_pymb(char* str){	return get_matched_pymb(str,t9.pymb);}//得到字母表// str :输入字符串// 返回值 ：匹配的个数char get_zimu(char *str){	return get_matched_zimub(str,t9_z.pymb);}
 // USER START (Optionally insert additional static data)
 // USER END
 
@@ -51,8 +51,8 @@
 *       _aDialogCreate
 */
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
-  { FRAMEWIN_CreateIndirect, T9_input_info, ID_FRAMEWIN_0, 100, 80, 300, 150, 0, 0x0, 0 },
-  { EDIT_CreateIndirect, "Edit", ID_EDIT_0, 17, 10, 251, 30, 0, 0xc, 0 },
+  { FRAMEWIN_CreateIndirect, T9_input_info, ID_FRAMEWIN_0, 100, 80, 300, 170, 0, 0x0, 0 },
+  { EDIT_CreateIndirect, "Edit", ID_EDIT_0, 17, 10, 251, 30, 0, 0xc, 0 },  { TEXT_CreateIndirect, "Text", ID_TEXT_1, 2, 40, 206, 28, 0, 0x0, 0 },
   // USER START (Optionally insert additional widgets)
   // USER END
 };
@@ -78,7 +78,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
   // USER START (Optionally insert additional variables)
   // USER END
 
-  switch (pMsg->MsgId) {
+  switch (pMsg->MsgId) {  case WM_PAINT:       GUI_SetFont(GUI_FONT_20_1);       GUI_SetColor(GUI_BLUE);       GUI_DispStringAt("a",20,70);       GUI_SetFont(&GUI_Fontstay24);     GUI_DispStringAt("\xe6\xb2\xa1\xe6\x9c\x89\xe5\x8c\xb9\xe9\x85\x8d\xe7\xbb\x93\xe6\x9e\x9c",20,100);       break;
   case WM_INIT_DIALOG:
     //
     // Initialization of 'input'
@@ -133,7 +133,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 *       Public code
 *
 **********************************************************************
-*/void W28_InPutDisplay(void){}void W28_InPutProcess(void){     switch(WinKeyValue)
+*/void W28_InPutDisplay(void){    WM_HWIN hItem;    hItem = WM_GetDialogItem(W28_InPutwindow, ID_TEXT_1);    TEXT_SetText(hItem, "");    TEXT_SetFont(hItem, &GUI_Fontstay24);	if(py_switch == NUM_MODE) //输入数字	{        #if CODEBLACK_FLAG          TEXT_SetText(hItem, "\xe6\x95\xb0\xe5\xad\x97");        #else           TEXT_SetText(hItem, "数字");        #endif // CODEBLACK_FLAG	}	if(py_switch == HANZI_MODE) //输入汉字	{        #if CODEBLACK_FLAG          TEXT_SetText(hItem, "\xe6\xb1\x89\xe5\xad\x97");        #else           TEXT_SetText(hItem, "汉字");        #endif // CODEBLACK_FLAG	}	if(py_switch == ZIMU_MODE) //输入字母	{        #if CODEBLACK_FLAG          TEXT_SetText(hItem, "\xe5\xad\x97\xe6\xaf\x8d");        #else           TEXT_SetText(hItem, "字母");        #endif // CODEBLACK_FLAG	}	if(py_switch == QUWEI_MODE)//通过区位码输入汉字	{        #if CODEBLACK_FLAG          TEXT_SetText(hItem, "\xe5\x8c\xba\xe4\xbd\x8d");        #else           TEXT_SetText(hItem, "区位");        #endif // CODEBLACK_FLAG	}}char hanzi[40];char infom[40];void W28_InPutProcess(void){    int X,Y;	char *info;	int i;	int len;	char temp[2];	char mb_len = 0; //	char Str_mb[18];    WM_HWIN hItem;	//memcpy(hanzi,&WinEditCharBuffer[WinEditIndex][0],GetInputLen());	if(strlen(hanzi) > 0)	{		input_count = strlen(hanzi);//得到已存在汉字长度	}	else	{		input_count = 0;	}	info = infom;     switch(WinKeyValue)
      {
      case GUI_KEY_ENTER://ok键
 
@@ -160,7 +160,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 		break;
 	case GUI_USR_KEY_RESET://复位键
 		break;
-	case GUI_KEY_F1://F1功能键
+	case GUI_KEY_F1://F1功能键				py_switch++;  //输入法状态切换		 		input_page = 0;				input_char = 0;				input_py_select = 0;				input_mb_select = 0;				memset(info,0,40);				if(py_switch == 4)				{					py_switch = 0;				}//				if(input_flag == INPUTING_PY)//				{    hItem = WM_GetDialogItem(W28_InPutwindow, ID_TEXT_1);    TEXT_SetText(hItem, "");    TEXT_SetFont(hItem, &GUI_Fontstay24);	if(py_switch == NUM_MODE) //输入数字	{        #if CODEBLACK_FLAG          TEXT_SetText(hItem, "\xe6\x95\xb0\xe5\xad\x97");        #else           TEXT_SetText(hItem, "数字");        #endif // CODEBLACK_FLAG	}	if(py_switch == HANZI_MODE) //输入汉字	{        #if CODEBLACK_FLAG          TEXT_SetText(hItem, "\xe6\xb1\x89\xe5\xad\x97");        #else           TEXT_SetText(hItem, "汉字");        #endif // CODEBLACK_FLAG	}	if(py_switch == ZIMU_MODE) //输入字母	{        #if CODEBLACK_FLAG          TEXT_SetText(hItem, "\xe5\xad\x97\xe6\xaf\x8d");        #else           TEXT_SetText(hItem, "字母");        #endif // CODEBLACK_FLAG	}	if(py_switch == QUWEI_MODE)//通过区位码输入汉字	{        #if CODEBLACK_FLAG          TEXT_SetText(hItem, "\xe5\x8c\xba\xe4\xbd\x8d");        #else           TEXT_SetText(hItem, "区位");        #endif // CODEBLACK_FLAG	}
 		break;
 	case GUI_KEY_F2://F2功能键
 		break;
@@ -174,7 +174,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
 	case '6':
 	case '7':
 	case '8':
-	case '9':
+	case '9':                hItem = WM_GetDialogItem(W28_InPutwindow, ID_EDIT_0);                EDIT_SetText(hItem, "");                EDIT_SetFont(hItem, &GUI_Fontstay24);				input_flag = INPUTING_PY;				input_page = 0;				input_py_select = 0;				input_mb_select = 0;				if(py_switch == HANZI_MODE) //汉字输入状态				{					if(input_flag == INPUTING_PY)					{						if ((input_count) <= GetInputLen())						//if ((input_count+2) < buffer->pwidget[9].attribute.in.len) //判断已输入的字符是否已经达到规定的数目						{							info[input_char] = WinKeyValue;							input_char++;							/**********************T9输入法************************************/							memset(inputstring,0,40);							memcpy(inputstring,info,input_char+1);							py_match = t9.getpymb(inputstring);							if(py_match&0x80) //部分匹配							{							    GUI_SetFont(GUI_FONT_20_1);							    GUI_SetColor(GUI_RED);							    GUI_SetBkColor(HFM_COLOR_BK);							    GUI_DispStringAt(t9.pymb[0]->py,2,50);								//draw_string((U16*)LcdBuffer1, x, y, COLOUR_RED, COLOUR_GREY, "                                  ");								//draw_string((U16*)LcdBuffer1, x, y+20, COLOUR_RED, COLOUR_GREY, "                              ");								//draw_string((U16*)LcdBuffer1, x, y,  COLOUR_GREY,COLOUR_BLUE, t9.pymb[0]->py); //反色显示								memset(Str_mb,0,18);								memcpy(Str_mb,t9.pymb[0]->pymb,18);								//draw_string((U16*)LcdBuffer1, x, y+20, COLOUR_BLUE, COLOUR_GREY, Str_mb);                                GUI_SetFont(&GUI_Fontstay24);								GUI_DispStringAt(Str_mb,2,75);							}							else if(py_match)							{								//draw_string((U16*)LcdBuffer1, x, y, COLOUR_RED, COLOUR_GREY, "                                  ");								//draw_string((U16*)LcdBuffer1, x, y+20, COLOUR_RED, COLOUR_GREY, "                                 ");								for(i = 0;i < py_match;i ++)								{								    GUI_SetFont(GUI_FONT_20_1);									if(i == 0)									{                                        GUI_DispStringAt("a",2,70);                                       //GUI_DispStringAt(t9.pymb[i]->py,2,50);										//draw_string((U16*)LcdBuffer1, x+60*i, y, COLOUR_GREY,COLOUR_BLUE,t9.pymb[i]->py);	//   反色显示									}									else									{									    GUI_DispStringAt(t9.pymb[i]->py,2,50);										//draw_string((U16*)LcdBuffer1, x+60*i, y, COLOUR_BLUE, COLOUR_GREY, t9.pymb[i]->py);//显示匹配的码表									}								}								memset(Str_mb,0,18);								memcpy(Str_mb,t9.pymb[0]->pymb,18);                                GUI_SetFont(&GUI_Fontstay24);								GUI_DispStringAt(Str_mb,2,70);								//draw_string((U16*)LcdBuffer1, x, y+20, COLOUR_BLUE, COLOUR_GREY, Str_mb);							}							else //没有任何匹配结果							{								input_flag = INPUTING_PY; //输入法状态为初始态								input_page = 0;								input_char = 0;								input_py_select = 0;								input_mb_select = 0;								memset(info,0,40);                                GUI_SetFont(GUI_FONT_20_1);                                GUI_DispStringAt("                 ",80,20);                                GUI_SetFont(&GUI_Fontstay24);                                #if CODEBLACK_FLAG                                 GUI_DispStringAt("\xe6\xb2\xa1\xe6\x9c\x89\xe5\x8c\xb9\xe9\x85\x8d\xe7\xbb\x93\xe6\x9e\x9c",80,40);                                #else                                GUI_DispStringAt("没有匹配结果!",80,40);                                #endif // CODEBLACK_FLAG								//draw_string((U16*)LcdBuffer1, x, y, COLOUR_RED, COLOUR_GREY, "                                ");								//draw_string((U16*)LcdBuffer1, x, y+20, COLOUR_RED, COLOUR_GREY, "                               ");								//draw_string((U16*)LcdBuffer1, x, y, COLOUR_RED, COLOUR_GREY, "没有任何匹配结果！");							}							/***********************T9输入法************************************/						}					}				}				if(py_switch == NUM_MODE) //直接输入数字				{					if ((input_count) <= GetInputLen())					//if ((input_count+1) < buffer->pwidget[9].attribute.in.len) //判断已输入的字符是否超过规定的					{						//draw_string((U16*)LcdBuffer1, x, y, COLOUR_RED, COLOUR_GREY, "                                  ");						//draw_string((U16*)LcdBuffer1, x, y+20, COLOUR_RED, COLOUR_GREY, "                              ");						hanzi[input_count] = WinKeyValue;						input_count++;						//set_string(buffer, 9, hanzi);						//draw_string((U16*)LcdBuffer1, 195, 125, COLOUR_BLACK,COLOUR_GREY,hanzi);						//memcpy(&WinEditCharBuffer[WinEditIndex][0],hanzi,40);					}				}				if(py_switch == ZIMU_MODE)//输入字母				{					if(input_flag == INPUTING_PY )					{						input_mb_select = 1; //光标显示位置在第二个字母						//if ((input_count+1) < buffer->pwidget[9].attribute.in.len)						if ((input_count) <= GetInputLen())						{							info[0] = WinKeyValue;							//input_char++;							/**********************T9输入法************************************/							memcpy(inputstring,info,1);							py_match = t9_z.get_zimu(inputstring);							//draw_string((U16*)LcdBuffer1, x, y, COLOUR_RED, COLOUR_GREY, "                             ");							//draw_string((U16*)LcdBuffer1, x, y+20, COLOUR_RED, COLOUR_GREY, "                           ");							//draw_string((U16*)LcdBuffer1, x, y+20, COLOUR_BLUE, COLOUR_GREY, t9_z.pymb[0]->pymb);							temp[0] = 0;							temp[1] = 0;							memcpy(temp,t9_z.pymb[input_py_select]->pymb+1,1); //第二个字母反色							//draw_string((U16*)LcdBuffer1, x+10, y+20, COLOUR_GREY,COLOUR_BLUE,temp);						}					}				}				/**************************************区位码输入***********************************************************/				if(py_switch == QUWEI_MODE)				{					if((input_count) <= GetInputLen())					{						info[input_char] = WinKeyValue;						input_char++;						//memcpy(inputstring,info,input_char+1);//						for(i = 0; i < input_char;i++)//						{//							info[i] += 30;//						}						//draw_string((U16*)LcdBuffer1, x, y+20, COLOUR_BLUE, COLOUR_GREY, "                              ");						//draw_string((U16*)LcdBuffer1, x, y, COLOUR_BLUE, COLOUR_GREY, "                           ");						//draw_string((U16*)LcdBuffer1, x, y, COLOUR_BLUE, COLOUR_GREY, info);						if(input_char == 4)						{							input_char = 0;							Zone = (info[0]-0x30)*10+(info[1]-0x30);							Bit = (info[2]-0x30)*10 + (info[3]-0x30);							if((Zone > 0)&&(Zone < 95)&&(Bit > 0)&&(Bit < 95))							{								hanzi[input_count++] = Zone + 0xa0;								hanzi[input_count++] = Bit + 0xa0;								//draw_string((U16*)LcdBuffer1, 195, 125, COLOUR_BLACK,COLOUR_GREY,hanzi);								//memcpy(&WinEditCharBuffer[WinEditIndex][0],hanzi,40);							}							else							{								//draw_string((U16*)LcdBuffer1, x, y+20, COLOUR_BLUE, COLOUR_GREY, "区位码输入错误");							}							memset(info,0,40);						}					}				}
 		break;
 	default :
 			break;
