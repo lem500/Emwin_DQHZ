@@ -20,7 +20,7 @@ Purpose     : Display controller initialization
 ---------------------------END-OF-HEADER------------------------------
 */
 
-#include "GUI.h"
+#include <GUI.h>
 
 /*********************************************************************
 *
