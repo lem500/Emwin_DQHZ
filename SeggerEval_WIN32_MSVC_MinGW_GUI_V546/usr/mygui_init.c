@@ -298,7 +298,7 @@ void WinKeyProcess(void)
      case GUI_KEY_ENTER://ok瑩
           if(WinClass[WinIndex].property == WIN_TYPE_EDIT)          {              if(userlevel < WinClass[WinIndex].UserLevel)              {                if(WinIndex != WINDOW_W27_PASSWORDWIN)                {                   WinPasswordMode = WIN_PASSWORD_OTHER;                   WinLastIndex = WinIndex;                   sprintf(input_userlevel,"%d",WinClass[WinIndex].UserLevel);                   input_userlevelflag = WinClass[WinIndex].UserLevel;                   WinLoad(WINDOW_W27_PASSWORDWIN);                }              }              else                {                }          }
           break;
-     case GUI_KEY_HOME://粕等偌聽         if(WinIndex !=WINDOW_W27_PASSWORDWIN)         {
+     case GUI_KEY_HOME://粕等偌聽         if((WinIndex !=WINDOW_W27_PASSWORDWIN)&&(WinIndex !=WINDOW_W28_INPUT_TEXT))         {
            WinLoad(WINDOW_MENU_INDEX);         }         WinKeyValue = 0;
           break;
      case GUI_KEY_LEFT://酘瑩

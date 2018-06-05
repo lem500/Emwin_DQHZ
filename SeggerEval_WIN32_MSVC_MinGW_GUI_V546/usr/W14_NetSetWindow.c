@@ -33,7 +33,7 @@
 #define ID_TEXT_0 (GUI_ID_USER + 0x01)
 #define ID_TEXT_1 (GUI_ID_USER + 0x02)
 #define ID_TEXT_2 (GUI_ID_USER + 0x03)
-
+#define ID_TEXT_3 (GUI_ID_USER + 0x04)#define ID_TEXT_4 (GUI_ID_USER + 0x05)#define ID_TEXT_5 (GUI_ID_USER + 0x06)#define ID_LISTVIEW_0 (GUI_ID_USER + 0x07)
 
 // USER START (Optionally insert additional defines)
 // USER END
@@ -43,7 +43,7 @@
 *       Static data
 *
 **********************************************************************
-*/#if CODEBLACK_FLAGunsigned char lianwangsezi[] = "\xe8\x81\x94\xe7\xbd\x91\xe8\xae\xbe\xe7\xbd\xae";#elseconst unsigned char lianwangsezi[] = "联网设置";#endif // CODEBLACK_FLAG
+*/#if CODEBLACK_FLAGunsigned char lianwangsezi[] = "\xe8\x81\x94\xe7\xbd\x91\xe8\xae\xbe\xe7\xbd\xae";unsigned char benjinhao[] = "\xe6\x9c\xac\xe6\x9c\xba\xe6\x9c\xba\xe5\x8f\xb7:";unsigned char ziaixanzongshu[] ="\xe5\x9c\xa8\xe7\xba\xbf\xe6\x80\xbb\xe6\x95\xb0:";#elseconst unsigned char lianwangsezi[] = "联网设置";const unsigned char benjinhao[] = "本机机号:";const unsigned char ziaixanzongshu[] = "在线总数:";#endif // CODEBLACK_FLAG
 
 // USER START (Optionally insert additional static data)
 // USER END
@@ -56,7 +56,8 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
   { WINDOW_CreateIndirect, "Window", ID_WINDOW_0, 0, 0, 480, 320, 0, 0x0, 0 },
   { TEXT_CreateIndirect, "0", ID_TEXT_0, 277, 293, 206, 28, 0, 0x0, 0 },
   { TEXT_CreateIndirect, yonghujibie, ID_TEXT_1, 6, 293, 130, 30, 0, 0x0, 0 },
-  { TEXT_CreateIndirect, lianwangsezi, ID_TEXT_2, 6, 1, 130, 30, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, lianwangsezi, ID_TEXT_2, 6, 1, 130, 30, 0, 0x0, 0 },  { TEXT_CreateIndirect, benjinhao, ID_TEXT_3, 6, 35, 130, 30, 0, 0x0, 0 },
+  { TEXT_CreateIndirect, ziaixanzongshu, ID_TEXT_4, 200, 35, 130, 30, 0, 0x0, 0 },  { LISTVIEW_CreateIndirect, "Listview", ID_LISTVIEW_0, 0, 67, 480, 210, 0, 0x0, 0 },
   // USER START (Optionally insert additional widgets)
   // USER END
 };
@@ -76,12 +77,12 @@ static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
 *       _cbDialog
 */
 static void _cbDialog(WM_MESSAGE * pMsg) {
-  WM_HWIN hItem;  unsigned char userstring[30];
+  WM_HWIN hItem;  HEADER_Handle hHeader;  unsigned char userstring[30];
   // USER START (Optionally insert additional variables)
   // USER END
 
   switch (pMsg->MsgId) {  case WM_PAINT :     if(WM_Paint_Flag == 1)     {        WM_Paint_Flag = 0;       GUI_SetColor(HFM_HEAD_BK);       GUI_FillRect(0,0,480,30);       GUI_FillRect(0,290,480,320);       GUI_SetBkColor(HFM_COLOR_BK);          //显示密码级别       hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_1);       sprintf(userstring,"\xe7\x94\xa8\xe6\x88\xb7\xe7\xba\xa7\xe5\x88\xab:%d",userlevel);
-       TEXT_SetText(hItem, userstring);//     }    break;
+       TEXT_SetText(hItem, userstring);//     }    break;
   case WM_INIT_DIALOG:
     //
     // Initialization of 'Window'
@@ -91,7 +92,7 @@ static void _cbDialog(WM_MESSAGE * pMsg) {
     // USER START (Optionally insert additional code for further widget initialization)        hItem = WM_GetDialogItem(pMsg->hWin, ID_TEXT_0);        _hwTime[13] = hItem;
        TEXT_SetFont(hItem, GUI_FONT_24_1);
        TEXT_SetTextAlign(hItem, GUI_TA_LEFT | GUI_TA_VCENTER);
-       TEXT_SetText(hItem, timee);
+       TEXT_SetText(hItem, timee);           hItem = WM_GetDialogItem(pMsg->hWin, ID_LISTVIEW_0);     hHeader = LISTVIEW_GetHeader(hItem);     HEADER_SetFont(hHeader,&GUI_Fontstay24);    #if CODEBLACK_FLAG    LISTVIEW_AddColumn(hItem, 52, "\xe6\x9c\xba\xe5\x8f\xb7", GUI_TA_CENTER | GUI_TA_VCENTER);    LISTVIEW_AddColumn(hItem, 52, "\xe5\xad\x98\xe5\x9c\xa8", GUI_TA_CENTER | GUI_TA_VCENTER);    LISTVIEW_AddColumn(hItem, 52, "\xe4\xba\x8b\xe4\xbb\xb6\n\xe6\x8e\xa5\xe6\x94\xb6", GUI_TA_CENTER | GUI_TA_VCENTER);    LISTVIEW_AddColumn(hItem, 52, "\xe6\xb6\x88\xe9\x9f\xb3\n\xe5\xa4\x8d\xe4\xbd\x8d", GUI_TA_CENTER | GUI_TA_VCENTER);    LISTVIEW_AddColumn(hItem, 270, "\xe4\xbd\x8d\xe7\xbd\xae", GUI_TA_CENTER | GUI_TA_VCENTER);    #else    LISTVIEW_AddColumn(hItem, 52, "本机", GUI_TA_CENTER | GUI_TA_VCENTER);    LISTVIEW_AddColumn(hItem, 52, "存在", GUI_TA_CENTER | GUI_TA_VCENTER);    LISTVIEW_AddColumn(hItem, 52, "事件\n接收", GUI_TA_CENTER | GUI_TA_VCENTER);    LISTVIEW_AddColumn(hItem, 52, "消音\n接收", GUI_TA_CENTER | GUI_TA_VCENTER);    LISTVIEW_AddColumn(hItem, 270, "位置", GUI_TA_CENTER | GUI_TA_VCENTER);    #endif // CODEBLACK_FLAG    LISTVIEW_SetGridVis(hItem, 1);    LISTVIEW_SetHeaderHeight(hItem, 52);    LISTVIEW_SetRowHeight(hItem, 26);    LISTVIEW_AddRow(hItem, NULL);    LISTVIEW_AddRow(hItem, NULL);    LISTVIEW_AddRow(hItem, NULL);    LISTVIEW_AddRow(hItem, NULL);    LISTVIEW_AddRow(hItem, NULL);    LISTVIEW_AddRow(hItem, NULL);    LISTVIEW_SetItemText(hItem, 0, 0, "1");    LISTVIEW_SetItemText(hItem, 1, 0, "N");    LISTVIEW_SetItemText(hItem, 2, 0, "N");    LISTVIEW_SetItemText(hItem, 3, 0, "N");    LISTVIEW_SetItemText(hItem, 0, 1, "2");    LISTVIEW_SetItemText(hItem, 1, 1, "N");    LISTVIEW_SetItemText(hItem, 2, 1, "N");    LISTVIEW_SetItemText(hItem, 3, 1, "N");    LISTVIEW_SetItemText(hItem, 0, 2, "3");    LISTVIEW_SetItemText(hItem, 1, 2, "N");    LISTVIEW_SetItemText(hItem, 2, 2, "N");    LISTVIEW_SetItemText(hItem, 3, 2, "N");    LISTVIEW_SetItemText(hItem, 0, 3, "4");    LISTVIEW_SetItemText(hItem, 1, 3, "N");    LISTVIEW_SetItemText(hItem, 2, 3, "N");    LISTVIEW_SetItemText(hItem, 3, 3, "N");    LISTVIEW_SetItemText(hItem, 0, 4, "5");    LISTVIEW_SetItemText(hItem, 1, 4, "N");    LISTVIEW_SetItemText(hItem, 2, 4, "N");    LISTVIEW_SetItemText(hItem, 3, 4, "N");    LISTVIEW_SetItemText(hItem, 0, 5, "6");    LISTVIEW_SetItemText(hItem, 1, 5, "N");    LISTVIEW_SetItemText(hItem, 2, 5, "N");    LISTVIEW_SetItemText(hItem, 3, 5, "N");    LISTVIEW_SetFont(hItem, GUI_FONT_24_ASCII);    LISTVIEW_SetItemTextColor(hItem,1,0,LISTVIEW_CI_UNSEL,GUI_BLUE);    //LISTVIEW_IncSel(hItem);      //  hItem = WM_GetDialogItem(pMsg->hWin, ID_LISTVIEW_0);
     // USER START (Optionally insert additional code for further widget initialization)
     // USER END
     break;

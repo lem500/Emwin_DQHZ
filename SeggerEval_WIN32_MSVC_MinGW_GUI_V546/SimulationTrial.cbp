@@ -76,10 +76,13 @@
 		<Unit filename="Config/SIMConf.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="Event/Communication.h" />
 		<Unit filename="Event/Event.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Event/Event.h" />
+		<Unit filename="Event/EventConstTable.h" />
+		<Unit filename="Event/EventDefine.h" />
 		<Unit filename="Event/Shield.h" />
 		<Unit filename="Event/ShieldTask.c">
 			<Option compilerVar="CC" />

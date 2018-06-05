@@ -52,7 +52,7 @@ unsigned char  dizzz[] = "\xe5\x9c\xb0\xe5\x9d\x80";unsigned char zaixxx[] ="\x
 */
 static const GUI_WIDGET_CREATE_INFO _aDialogCreate[] = {
   { WINDOW_CreateIndirect, "Window", ID_WINDOW_0, 0, 0, 480, 320, 0, 0x0, 0 },
-  { LISTVIEW_CreateIndirect, "Listview", ID_LISTVIEW_0, 0, 30, 480, 260, 0, 0x0, 0 },  { TEXT_CreateIndirect, "0", ID_TEXT_0, 277, 293, 206, 28, 0, 0x0, 0 },
+  { LISTVIEW_CreateIndirect, "Listview", ID_LISTVIEW_0, 0, 30, 480, 225, 0, 0x0, 0 },  { TEXT_CreateIndirect, "0", ID_TEXT_0, 277, 293, 206, 28, 0, 0x0, 0 },
   { TEXT_CreateIndirect, yonghujibie, ID_TEXT_1, 6, 293, 130, 30, 0, 0x0, 0 },
   { TEXT_CreateIndirect, shebeichaxun, ID_TEXT_2, 6, 1, 130, 30, 0, 0x0, 0 },
   // USER START (Optionally insert additional widgets)
